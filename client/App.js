@@ -6,6 +6,7 @@ import { NavigationContainer, StackActions } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import Auth from './src/pages/Auth'
 import HomePage from './src/pages/HomePage'
+import DetailFieldPage from "./src/pages/DetailFieldPage"
 
 const Stack = createStackNavigator()
 
@@ -16,6 +17,7 @@ export default function App() {
         <Stack.Navigator>
           <Stack.Screen name="Auth" component={Auth} />
           {/* <Stack.Screen name="HomePage" component={HomePage} /> */}
+          {/* <Stack.Screen name="Detail Field" component={DetailFieldPage} /> */}
         </Stack.Navigator>
       </NavigationContainer>
     </PaperProvider>
