@@ -2,8 +2,9 @@ import React, { useState } from 'react'
 import { View, StyleSheet } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import { Button, Card, Modal, Portal, TextInput, Title } from 'react-native-paper'
+import HomeItem from '../components/HomeItem'
 
-export default function HomePage({ navigation }) {
+export default function HomePage() {
   const [visible, setVisible] = useState(false)
   const [newField, setNewField] = useState({
     name: '',
@@ -15,6 +16,7 @@ export default function HomePage({ navigation }) {
     console.log(newField)
     setVisible(false)
   }
+  const item = ["Field Name A", "Field Name B", "Field Name C"]
   return (
     <View>
       <ScrollView>
@@ -28,39 +30,9 @@ export default function HomePage({ navigation }) {
         </Portal>
         <Title style={styles.title}>Your Field</Title>
         <Button icon="ballot" mode="contained" style={styles.buttonAdd} onPress={showModal}>Add Field</Button>
-        <Card>
-          <Card.Cover
-            source={{ uri: "https://img.freepik.com/free-vector/colorful-farm-landscape-cartoon-style_52683-16677.jpg?size=626&ext=jpg" }}
-          />
-          <Card.Content>
-            <Title>Field Name A</Title>
-          </Card.Content>
-          <Card.Actions>
-            <Button onPress={() => navigation.push('Detail Field')} >Details</Button>
-          </Card.Actions>
-        </Card>
-        <Card>
-          <Card.Cover
-            source={{ uri: "https://img.freepik.com/free-vector/colorful-farm-landscape-cartoon-style_52683-16677.jpg?size=626&ext=jpg" }}
-          />
-          <Card.Content>
-            <Title>Field Name B</Title>
-          </Card.Content>
-          <Card.Actions>
-            <Button onPress={() => navigation.push('Detail Field')} >Details</Button>
-          </Card.Actions>
-        </Card>
-        <Card>
-          <Card.Cover
-            source={{ uri: "https://img.freepik.com/free-vector/colorful-farm-landscape-cartoon-style_52683-16677.jpg?size=626&ext=jpg" }}
-          />
-          <Card.Content>
-            <Title>Field Name C</Title>
-          </Card.Content>
-          <Card.Actions>
-            <Button onPress={() => navigation.push('Detail Field')} >Details</Button>
-          </Card.Actions>
-        </Card>
+        <HomeItem/>
+        <HomeItem/>
+        <HomeItem/>
       </ScrollView>
     </View>
   )
