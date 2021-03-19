@@ -19,7 +19,7 @@ export default function App() {
           <Stack.Screen name="Auth" component={Auth} />
           <Stack.Screen name="HomePage" component={HomePage} />
           <Stack.Screen name="DetailFieldPage" component={DetailFieldPage} />
-          <Stack.Screen name="Detail Plant" component={DetailPlantPage} />
+          <Stack.Screen name="DetailPlantPage" component={DetailPlantPage} />
         </Stack.Navigator>
       </NavigationContainer>
     </PaperProvider>

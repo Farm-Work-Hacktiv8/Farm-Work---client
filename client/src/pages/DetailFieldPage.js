@@ -1,41 +1,40 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { View, StyleSheet } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
-import { Button, Title, Card } from 'react-native-paper'
+import { Button, Title, Modal, Portal, TextInput } from 'react-native-paper'
+import FieldItem from '../components/FieldItem'
 
 export default function DetailFieldPage({ navigation }) {
+  const [visible, setVisible] = useState(false)
+  const item = ["Plant A", "Plant B", "Plant C"]
+
+  const showModal = () => { setVisible(true) }
+  const hideModal = () => { setVisible(false) }
+  const handleAdd = () => {
+    setVisible(false)
+  }
   return (
     <View>
       <ScrollView>
+        <Portal>
+          <Modal 
+            visible={visible} 
+            onDismiss={hideModal} 
+            contentContainerStyle={styles.modal}
+          >
+            <Title>Plant Detail</Title>
+            <TextInput label="Plant Name:" placeholder="Put your plant name here"/>
+            <TextInput label="Harvest Time:" placeholder="Enter estimate day for harvesting your plant" keyboardType="numeric"/>
+            <Button onPress={handleAdd}>Submit</Button>
+          </Modal>
+        </Portal>
         <Title style={styles.title}>Your Plant</Title>
-        <Button icon="ballot" mode="contained" style={styles.button}>Add Plant</Button>
-        <Card>
-          <Card.Cover source={{ uri: "https://images.unsplash.com/photo-1492944557828-11e576351057?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" }} />
-          <Card.Content>
-            <Title>Plant A</Title>
-          </Card.Content>
-          <Card.Actions>
-            <Button onPress={() => navigation.push('Detail Plant')}>Details plant</Button>
-          </Card.Actions>
-        </Card>
-        <Card>
-          <Card.Cover source={{ uri: "https://images.unsplash.com/photo-1492944557828-11e576351057?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" }} />
-          <Card.Content>
-            <Title>Plant B</Title>
-          </Card.Content>
-          <Card.Actions>
-            <Button onPress={() => navigation.push('Detail Plant')}>Details plant</Button>
-          </Card.Actions>
-        </Card>
-        <Card>
-          <Card.Cover source={{ uri: "https://images.unsplash.com/photo-1492944557828-11e576351057?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" }} />
-          <Card.Content>
-            <Title>Plant C</Title>
-          </Card.Content>
-          <Card.Actions>
-            <Button onPress={() => navigation.push('Detail Plant')}>Details plant</Button>
-          </Card.Actions>
-        </Card>
+        <Button icon="ballot" mode="contained" style={styles.button} onPress={showModal}>Add Plant</Button>
+        {
+          item.map((data, index) => {
+            return <FieldItem data={data} key={index} navigation={navigation}/>
+          })
+        }
       </ScrollView>
     </View>
   )
@@ -49,5 +48,9 @@ const styles = StyleSheet.create({
   button: {
     width: "40%",
     marginVertical: 20
+  },
+  modal: {
+    backgroundColor: 'white',
+    padding: 20,
   }
 })
