@@ -4,7 +4,7 @@ import { ScrollView } from 'react-native-gesture-handler'
 import { Button, Card, Modal, Portal, TextInput, Title } from 'react-native-paper'
 import HomeItem from '../components/HomeItem'
 
-export default function HomePage() {
+export default function HomePage({ navigation }) {
   const [visible, setVisible] = useState(false)
   const [newField, setNewField] = useState({
     name: '',
@@ -30,9 +30,11 @@ export default function HomePage() {
         </Portal>
         <Title style={styles.title}>Your Field</Title>
         <Button icon="ballot" mode="contained" style={styles.buttonAdd} onPress={showModal}>Add Field</Button>
-        <HomeItem/>
-        <HomeItem/>
-        <HomeItem/>
+        {
+          item.map((data, index) => {
+            return <HomeItem data={data} key={index} navigation={navigation}/>
+          })
+        }
       </ScrollView>
     </View>
   )
