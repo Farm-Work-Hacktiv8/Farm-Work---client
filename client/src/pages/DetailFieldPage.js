@@ -25,7 +25,7 @@ export default function DetailFieldPage({ navigation }) {
             <Title>Plant Detail</Title>
             <TextInput label="Plant Name:" mode="outlined" placeholder="Put your plant name here"/>
             <TextInput label="Harvest Time:" mode="outlined" placeholder="Enter estimate day for harvesting your plant" keyboardType="numeric"/>
-            <Button onPress={handleAdd}>Submit</Button>
+            <Button onPress={handleAdd} mode="contained" style={styles.buttonModal}>Submit</Button>
           </Modal>
         </Portal>
         <Title style={styles.title}>Your Plant</Title>
@@ -53,8 +53,14 @@ const styles = StyleSheet.create({
     marginHorizontal: 110
   },
   modal: {
-    backgroundColor: 'white',
+    backgroundColor: '#ffe8d6',
     padding: 20,
+    maxWidth: "95%",
+    marginHorizontal: 20
+  },
+  buttonModal: {
+    marginVertical: 10,
+    backgroundColor: "#b7b7a4"
   },
   container: {
     backgroundColor: "#cb997e"
