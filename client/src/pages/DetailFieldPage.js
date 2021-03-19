@@ -23,8 +23,8 @@ export default function DetailFieldPage({ navigation }) {
             contentContainerStyle={styles.modal}
           >
             <Title>Plant Detail</Title>
-            <TextInput label="Plant Name:" placeholder="Put your plant name here"/>
-            <TextInput label="Harvest Time:" placeholder="Enter estimate day for harvesting your plant" keyboardType="numeric"/>
+            <TextInput label="Plant Name:" mode="outlined" placeholder="Put your plant name here"/>
+            <TextInput label="Harvest Time:" mode="outlined" placeholder="Enter estimate day for harvesting your plant" keyboardType="numeric"/>
             <Button onPress={handleAdd}>Submit</Button>
           </Modal>
         </Portal>
@@ -43,11 +43,14 @@ export default function DetailFieldPage({ navigation }) {
 const styles = StyleSheet.create({
   title: {
     marginTop: 20,
-    textAlign: 'center'
+    textAlign: 'center',
+    fontSize: 30,
+    fontWeight: 'bold'
   },
   button: {
     width: "40%",
-    marginVertical: 20
+    marginVertical: 20,
+    marginHorizontal: 110
   },
   modal: {
     backgroundColor: 'white',

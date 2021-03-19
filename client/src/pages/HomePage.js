@@ -27,8 +27,8 @@ export default function HomePage({ navigation }) {
             contentContainerStyle={styles.modal}
           >
             <Title>Fields Detail</Title>
-            <TextInput label="Fields Name:" placeholder="please enter a name..." onChange={(text) => { setNewField({ ...newField, name: text }) }} />
-            <TextInput label="Space of Farm:" placeholder="in metre/square" keyboardType="numeric" onChange={(text) => { setNewField({ ...newField, widthField: text }) }} />
+            <TextInput label="Fields Name:" mode="outlined" placeholder="please enter a name..." onChange={(text) => { setNewField({ ...newField, name: text }) }} />
+            <TextInput label="Space of Farm:" mode="outlined" placeholder="in metre/square" keyboardType="numeric" onChange={(text) => { setNewField({ ...newField, widthField: text }) }} />
             <Button onPress={handleAdd}>Submit</Button>
           </Modal>
         </Portal>
@@ -48,13 +48,16 @@ const styles = StyleSheet.create({
   title: {
     marginTop: 20,
     textAlign: 'center',
+    fontSize: 30,
+    fontWeight: 'bold'
   },
   buttonAdd: {
     width: "30%",
-    marginVertical: 20
+    marginVertical: 20,
+    marginHorizontal: 125
   },
   modal: {
     backgroundColor: 'white',
     padding: 20,
-  }
+  },
 })

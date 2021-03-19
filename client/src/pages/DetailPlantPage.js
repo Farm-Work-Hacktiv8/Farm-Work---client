@@ -43,7 +43,9 @@ export default function DetailPlantPage() {
 const styles = StyleSheet.create({
   title: {
     marginVertical: 20,
-    textAlign: 'center'
+    textAlign: 'center',
+    fontSize: 30,
+    fontWeight: 'bold'
   },
   card: {
     marginVertical: 10
