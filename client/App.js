@@ -15,11 +15,11 @@ export default function App() {
   return (
     <PaperProvider>
       <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen name="Auth" component={Auth} />
-          {/* <Stack.Screen name="HomePage" component={HomePage} /> */}
-          {/* <Stack.Screen name="Detail Field" component={DetailFieldPage} /> */}
-          {/* <Stack.Screen name="Detail Plant" component={DetailPlantPage} /> */}
+        <Stack.Navigator initialRouteName="HomePage">
+          {/* <Stack.Screen name="Auth" component={Auth} /> */}
+          <Stack.Screen name="HomePage" component={HomePage} />
+          <Stack.Screen name="Detail Field" component={DetailFieldPage} />
+          <Stack.Screen name="Detail Plant" component={DetailPlantPage} />
         </Stack.Navigator>
       </NavigationContainer>
     </PaperProvider>
