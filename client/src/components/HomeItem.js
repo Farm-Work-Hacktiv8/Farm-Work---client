@@ -2,7 +2,7 @@ import React from 'react'
 import { View } from 'react-native'
 import { Card, Button, Title } from 'react-native-paper'
 
-export default function HomeItem(props, { navigation }) {
+export default function HomeItem({ navigation, data }) {
   return (
     <View>
       <Card>
@@ -10,10 +10,10 @@ export default function HomeItem(props, { navigation }) {
           source={{ uri: "https://img.freepik.com/free-vector/colorful-farm-landscape-cartoon-style_52683-16677.jpg?size=626&ext=jpg" }}
         />
         <Card.Content>
-          <Title>Fields Name A</Title>
+          <Title>{data}</Title>
         </Card.Content>
         <Card.Actions>
-          <Button onPress={() => navigation.push('Detail Field')} >Details</Button>
+          <Button onPress={() => { navigation.navigate('DetailFieldPage') }} >Details</Button>
         </Card.Actions>
       </Card>
     </View>
