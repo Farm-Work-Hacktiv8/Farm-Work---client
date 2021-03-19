@@ -1,53 +1,49 @@
 import React from 'react'
 import { View, StyleSheet } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
-import { Card, Text, Title, Divider } from 'react-native-paper'
+import { Title } from 'react-native-paper'
+import PlantItem from "../components/PlantItem"
 
 export default function DetailPlantPage() {
+  const item = [
+    {
+      name: "Plant A",
+      temperature: 18,
+      airHumidity: 19,
+      groundHumidity: 20,
+      harvest: 27
+    },
+    {
+      name: "Plant B",
+      temperature: 18,
+      airHumidity: 19,
+      groundHumidity: 20,
+      harvest: 27
+    },
+    {
+      name: "Plant C",
+      temperature: 18,
+      airHumidity: 19,
+      groundHumidity: 20,
+      harvest: 27
+    },
+    {
+      name: "Plant D",
+      temperature: 18,
+      airHumidity: 19,
+      groundHumidity: 20,
+      harvest: 27
+    }
+  ]
   return (
     <View style={styles.container}>
       <ScrollView>
         <Title style={[styles.title]}>Your Plants in Field</Title>
-        <Card style={[styles.card]}>
-          <Card.Content>
-            <Title style={styles.cardTitle}>Plant Name A</Title>
-            <Divider style={styles.divider}/>
-            <Text>Temperature: 0</Text>
-            <Text>Air Humidity: 0</Text>
-            <Text>Ground Humidity: 0</Text>
-            <Text>Harvest Time: 0</Text>
-          </Card.Content>
-        </Card>
-        <Card style={[styles.card]}>
-          <Card.Content>
-            <Title style={styles.cardTitle}>Plant Name B</Title>
-            <Divider style={styles.divider}/>
-            <Text>Temperature: 0</Text>
-            <Text>Air Humidity: 0</Text>
-            <Text>Ground Humidity: 0</Text>
-            <Text>Harvest Time: 0</Text>
-          </Card.Content>
-        </Card>
-        <Card style={[styles.card]}>
-          <Card.Content>
-            <Title style={styles.cardTitle}>Plant Name C</Title>
-            <Divider style={styles.divider}/>
-            <Text>Temperature: 0</Text>
-            <Text>Air Humidity: 0</Text>
-            <Text>Ground Humidity: 0</Text>
-            <Text>Harvest Time: 0</Text>
-          </Card.Content>
-        </Card>
-        <Card style={[styles.card]}>
-          <Card.Content>
-            <Title style={styles.cardTitle}>Plant Name D</Title>
-            <Divider style={styles.divider}/>
-            <Text>Temperature: 0</Text>
-            <Text>Air Humidity: 0</Text>
-            <Text>Ground Humidity: 0</Text>
-            <Text>Harvest Time: 0</Text>
-          </Card.Content>
-        </Card>
+        {
+          item.map((data, index) => {
+            return <PlantItem data={data} key={index}/>
+          })
+        }
       </ScrollView>
     </View>
   )
