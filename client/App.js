@@ -5,6 +5,7 @@ import { Provider as PaperProvider } from 'react-native-paper'
 import { NavigationContainer, StackActions } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import Auth from './src/pages/Auth'
+import HomePage from './src/pages/HomePage'
 
 const Stack = createStackNavigator()
 
@@ -14,6 +15,7 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen name="Auth" component={Auth} />
+          {/* <Stack.Screen name="HomePage" component={HomePage} /> */}
         </Stack.Navigator>
       </NavigationContainer>
     </PaperProvider>
