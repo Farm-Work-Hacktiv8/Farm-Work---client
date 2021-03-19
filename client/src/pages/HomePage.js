@@ -18,7 +18,7 @@ export default function HomePage({ navigation }) {
   }
   const item = ["Field Name A", "Field Name B", "Field Name C"]
   return (
-    <View>
+    <View style={styles.container}>
       <ScrollView>
         <Portal>
           <Modal 
@@ -60,4 +60,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     padding: 20,
   },
+  container: {
+    backgroundColor: "#cb997e"
+  }
 })

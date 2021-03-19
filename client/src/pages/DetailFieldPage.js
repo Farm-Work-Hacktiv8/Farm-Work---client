@@ -14,7 +14,7 @@ export default function DetailFieldPage({ navigation }) {
     setVisible(false)
   }
   return (
-    <View>
+    <View style={styles.container}>
       <ScrollView>
         <Portal>
           <Modal 
@@ -55,5 +55,8 @@ const styles = StyleSheet.create({
   modal: {
     backgroundColor: 'white',
     padding: 20,
+  },
+  container: {
+    backgroundColor: "#cb997e"
   }
 })
