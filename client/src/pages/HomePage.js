@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { View, StyleSheet } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
-import { Button, Card, Modal, Portal, TextInput, Title } from 'react-native-paper'
+import { Button, Modal, Portal, TextInput, Title } from 'react-native-paper'
 import HomeItem from '../components/HomeItem'
 
 export default function HomePage({ navigation }) {
@@ -21,7 +21,11 @@ export default function HomePage({ navigation }) {
     <View>
       <ScrollView>
         <Portal>
-          <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={styles.modal}>
+          <Modal 
+            visible={visible} 
+            onDismiss={hideModal} 
+            contentContainerStyle={styles.modal}
+          >
             <Title>Fields Detail</Title>
             <TextInput label="Fields Name:" placeholder="please enter a name..." onChange={(text) => { setNewField({ ...newField, name: text }) }} />
             <TextInput label="Space of Farm:" placeholder="in metre/square" keyboardType="numeric" onChange={(text) => { setNewField({ ...newField, widthField: text }) }} />
