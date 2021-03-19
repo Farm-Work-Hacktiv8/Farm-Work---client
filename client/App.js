@@ -7,6 +7,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import Auth from './src/pages/Auth'
 import HomePage from './src/pages/HomePage'
 import DetailFieldPage from "./src/pages/DetailFieldPage"
+import DetailPlantPage from "./src/pages/DetailPlantPage"
 
 const Stack = createStackNavigator()
 
@@ -18,6 +19,7 @@ export default function App() {
           <Stack.Screen name="Auth" component={Auth} />
           {/* <Stack.Screen name="HomePage" component={HomePage} /> */}
           {/* <Stack.Screen name="Detail Field" component={DetailFieldPage} /> */}
+          {/* <Stack.Screen name="Detail Plant" component={DetailPlantPage} /> */}
         </Stack.Navigator>
       </NavigationContainer>
     </PaperProvider>
