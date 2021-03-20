@@ -49,6 +49,25 @@ export function addField (payload) {
   }
 }
 
+export function editField (payload, id) {
+  return async (dispatch) => {
+    try {
+      const response = await fetch(`http://localhost:3000/fields/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      })
+      const data = await response.json()
+      dispatch(getFields())
+    } catch (err) {
+      console.log(err)
+    }
+  }
+}
+
 export function getPlants(id) {
   return async (dispatch) => {
     try {
