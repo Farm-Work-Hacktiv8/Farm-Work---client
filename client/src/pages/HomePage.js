@@ -17,8 +17,7 @@ export default function HomePage({ navigation }) {
     dispatch(getFields())
   }, [])
 
-  function handleAdd (e) {
-    e.preventDefault()
+  function handleAdd () {
     const payload = {
       fieldName,
       fieldArea
@@ -42,7 +41,7 @@ export default function HomePage({ navigation }) {
             onDismiss={() => setVisible(false)} 
             contentContainerStyle={styles.modal}
           >
-            <Title>Fields Detail</Title>
+            <Title>Add Field</Title>
             <TextInput
               label="Field Name"
               mode="outlined"
@@ -58,7 +57,7 @@ export default function HomePage({ navigation }) {
               value={fieldArea}
               onChangeText={text => setFieldArea(text)}
             />
-            <Button onPress={(e) => handleAdd(e)} style={styles.buttonModal} mode="outlined">Submit</Button>
+            <Button onPress={handleAdd} style={styles.buttonModal} mode="outlined">Submit</Button>
             <Button onPress={handleCancel} style={styles.buttonModal} mode="outlined">Cancel</Button>
           </Modal>
         </Portal>
