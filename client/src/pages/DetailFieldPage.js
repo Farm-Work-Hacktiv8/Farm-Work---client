@@ -23,16 +23,16 @@ export default function DetailFieldPage({ route, navigation }) {
   }
   return (
     <View style={styles.container}>
-      <ScrollView>
+      <ScrollView style={styles.container}>
         <Portal>
-          <Modal 
-            visible={visible} 
-            onDismiss={hideModal} 
+          <Modal
+            visible={visible}
+            onDismiss={hideModal}
             contentContainerStyle={styles.modal}
           >
             <Title>Plant Detail</Title>
-            <TextInput label="Plant Name:" mode="outlined" placeholder="Put your plant name here"/>
-            <TextInput label="Harvest Time:" mode="outlined" placeholder="Enter estimate day for harvesting your plant" keyboardType="numeric"/>
+            <TextInput label="Plant Name:" mode="outlined" placeholder="Put your plant name here" />
+            <TextInput label="Harvest Time:" mode="outlined" placeholder="Enter estimate day for harvesting your plant" keyboardType="numeric" />
             <Button onPress={handleAdd} mode="contained" style={styles.buttonModal}>Submit</Button>
           </Modal>
         </Portal>
@@ -40,7 +40,7 @@ export default function DetailFieldPage({ route, navigation }) {
         <Button icon="ballot" mode="contained" style={styles.button} onPress={showModal}>Add Plant</Button>
         {
           plants.map((data) => {
-            return <FieldItem data={data} key={data.id} navigation={navigation}/>
+            return <FieldItem data={data} key={data.id} navigation={navigation} />
           })
         }
       </ScrollView>

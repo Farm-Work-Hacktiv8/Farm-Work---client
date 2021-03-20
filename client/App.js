@@ -9,7 +9,6 @@ import store from "./src/store/index"
 import Auth from './src/pages/Auth'
 import HomePage from './src/pages/HomePage'
 import DetailFieldPage from "./src/pages/DetailFieldPage"
-import DetailPlantPage from "./src/pages/DetailPlantPage"
 
 const Stack = createStackNavigator()
 
@@ -22,7 +21,6 @@ export default function App() {
             <Stack.Screen name="Auth" component={Auth} />
             <Stack.Screen name="HomePage" component={HomePage} />
             <Stack.Screen name="DetailFieldPage" component={DetailFieldPage} />
-            <Stack.Screen name="DetailPlantPage" component={DetailPlantPage} />
           </Stack.Navigator>
         </NavigationContainer>
       </PaperProvider>
