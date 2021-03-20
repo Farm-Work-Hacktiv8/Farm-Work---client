@@ -1,12 +1,20 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, StyleSheet } from 'react-native'
+import { useDispatch, useSelector } from "react-redux"
 import { ScrollView } from 'react-native-gesture-handler'
 import { Button, Title, Modal, Portal, TextInput } from 'react-native-paper'
 import FieldItem from '../components/FieldItem'
+import { getPlants } from "../store/action"
 
-export default function DetailFieldPage({ navigation }) {
+export default function DetailFieldPage({ route, navigation }) {
   const [visible, setVisible] = useState(false)
-  const item = ["Plant A", "Plant B", "Plant C"]
+  const { fieldsId } = route.params
+
+  const plants = useSelector(state => state.plants)
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(getPlants(fieldsId))
+  }, [])
 
   const showModal = () => { setVisible(true) }
   const hideModal = () => { setVisible(false) }
@@ -31,8 +39,8 @@ export default function DetailFieldPage({ navigation }) {
         <Title style={styles.title}>Your Plant</Title>
         <Button icon="ballot" mode="contained" style={styles.button} onPress={showModal}>Add Plant</Button>
         {
-          item.map((data, index) => {
-            return <FieldItem data={data} key={index} navigation={navigation}/>
+          plants.map((data) => {
+            return <FieldItem data={data} key={data.id} navigation={navigation}/>
           })
         }
       </ScrollView>

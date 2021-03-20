@@ -10,10 +10,10 @@ export default function HomeItem({ navigation, data }) {
           source={{ uri: "https://img.freepik.com/free-vector/colorful-farm-landscape-cartoon-style_52683-16677.jpg?size=626&ext=jpg" }}
         />
         <Card.Content>
-          <Title>{data}</Title>
+          <Title>{data.fieldName}</Title>
         </Card.Content>
         <Card.Actions>
-          <Button icon="arrow-right-bold-box" onPress={() => { navigation.navigate('DetailFieldPage') }} >Details</Button>
+          <Button icon="arrow-right-bold-box" onPress={() => { navigation.navigate('DetailFieldPage', { fieldsId: data.id }) }} >Details</Button>
           <Button icon="pencil-box">Edit</Button>
           <Button icon="trash-can">Delete</Button>
         </Card.Actions>
