@@ -4,42 +4,66 @@ import { View, StyleSheet } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import { Button, Modal, Portal, TextInput, Title } from 'react-native-paper'
 import HomeItem from '../components/HomeItem'
-import { getFields } from "../store/action"
+import { getFields, addField } from "../store/action"
 
 export default function HomePage({ navigation }) {
   const [visible, setVisible] = useState(false)
-  const [newField, setNewField] = useState({
-    name: '',
-    widthField: 0
-  })
-  const showModal = () => { setVisible(true) }
-  const hideModal = () => { setVisible(false) }
-  const handleAdd = () => {
-    console.log(newField)
-    setVisible(false)
-  }
+  const [fieldName, setFieldName] = useState('')
+  const [fieldArea, setFieldArea] = useState('')
   const dispatch = useDispatch()
   const fields = useSelector(state => state.fields)
+
   useEffect(() => {
     dispatch(getFields())
   }, [])
+
+  function handleAdd (e) {
+    e.preventDefault()
+    const payload = {
+      fieldName,
+      fieldArea
+    }
+    dispatch(addField(payload))
+    handleCancel()
+  }
+
+  function handleCancel () {
+    setFieldArea('')
+    setFieldName('')
+    setVisible(false)
+  }
+
   return (
     <View style={styles.container}>
       <ScrollView>
         <Portal>
           <Modal 
             visible={visible} 
-            onDismiss={hideModal} 
+            onDismiss={() => setVisible(false)} 
             contentContainerStyle={styles.modal}
           >
             <Title>Fields Detail</Title>
-            <TextInput label="Fields Name:" mode="outlined" placeholder="please enter a name..." onChange={(text) => { setNewField({ ...newField, name: text }) }} />
-            <TextInput label="Space of Farm:" mode="outlined" placeholder="in metre/square" keyboardType="numeric" onChange={(text) => { setNewField({ ...newField, widthField: text }) }} />
-            <Button onPress={handleAdd} style={styles.buttonModal} mode="outlined">Submit</Button>
+            <TextInput
+              label="Field Name"
+              mode="outlined"
+              placeholder="name your field"
+              value={fieldName}
+              onChangeText={text => setFieldName(text)} 
+            />
+            <TextInput
+              label="Field Area"
+              mode="outlined"
+              placeholder="In Hectare"
+              keyboardType="numeric"
+              value={fieldArea}
+              onChangeText={text => setFieldArea(text)}
+            />
+            <Button onPress={(e) => handleAdd(e)} style={styles.buttonModal} mode="outlined">Submit</Button>
+            <Button onPress={handleCancel} style={styles.buttonModal} mode="outlined">Cancel</Button>
           </Modal>
         </Portal>
         <Title style={styles.title}>Your Field</Title>
-        <Button icon="ballot" mode="contained" style={styles.buttonAdd} onPress={showModal}>Add Field</Button>
+        <Button icon="ballot" mode="contained" style={styles.buttonAdd} onPress={() => setVisible(true)}>Add Field</Button>
         {
           fields.map((data) => {
             return <HomeItem data={data} key={data.id} navigation={navigation}/>

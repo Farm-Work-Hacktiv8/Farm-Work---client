@@ -29,6 +29,26 @@ function setFields(payload) {
   return { type: "FIELDS/GETFIELDS", payload }
 }
 
+export function addField (payload) {
+  return async (dispatch) => {
+    try {
+      const response = await fetch('http://localhost:3000/fields/', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      })
+      const data = await response.json()
+      console.log(data)
+      dispatch(getFields())
+    } catch (err) {
+      console.log(err)
+    }
+  }
+}
+
 export function getPlants(id) {
   return async (dispatch) => {
     try {
