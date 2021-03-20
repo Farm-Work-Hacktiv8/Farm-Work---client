@@ -72,3 +72,21 @@ export function getOnePlant(id) {
     }
   }
 }
+
+export function addPlants(payload, id) {
+  return async (dispatch) => {
+    try {
+      const response = await fetch('http://localhost:3000/plants', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      })
+      dispatch(getPlants(id))
+    } catch ({ message }) {
+      console.log(message)
+    }
+  }
+}

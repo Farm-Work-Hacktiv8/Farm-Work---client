@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { ScrollView } from 'react-native-gesture-handler'
 import { Button, Title, Modal, Portal, TextInput } from 'react-native-paper'
 import FieldItem from '../components/FieldItem'
-import { getPlants } from "../store/action"
+import { getPlants, addPlants } from "../store/action"
 
 export default function DetailFieldPage({ route, navigation }) {
   const dispatch = useDispatch()
@@ -12,6 +12,11 @@ export default function DetailFieldPage({ route, navigation }) {
   const [visible, setVisible] = useState(false)
   const { fieldsId } = route.params
   const plants = useSelector(state => state.plants)
+  const [newPlant, setNewPlant] = useState({
+    plantName: "",
+    harvestTime: "",
+    fieldsId
+  })
 
   useEffect(() => {
     dispatch(getPlants(fieldsId))
@@ -21,6 +26,7 @@ export default function DetailFieldPage({ route, navigation }) {
   const hideModal = () => { setVisible(false) }
   
   const handleAdd = () => {
+    dispatch(addPlants(newPlant, fieldsId))
     setVisible(false)
   }
 
@@ -34,9 +40,26 @@ export default function DetailFieldPage({ route, navigation }) {
             contentContainerStyle={styles.modal}
           >
             <Title>Plant Detail</Title>
-            <TextInput label="Plant Name:" mode="outlined" placeholder="Put your plant name here" />
-            <TextInput label="Harvest Time:" mode="outlined" placeholder="Enter estimate day for harvesting your plant" keyboardType="numeric" />
-            <Button onPress={handleAdd} mode="contained" style={styles.buttonModal}>Submit</Button>
+            <TextInput 
+              label="Plant Name:" 
+              mode="outlined" 
+              placeholder="Put your plant name here"
+              onChange={(e) => { setNewPlant({ ...newPlant, plantName: e.target.value }) }}
+            />
+            <TextInput 
+              label="Harvest Time:" 
+              mode="outlined" 
+              placeholder="Estimate day for harvesting your plant" 
+              keyboardType="numeric"
+              onChange={(e) => { setNewPlant({ ...newPlant, harvestTime: e.target.value }) }}
+            />
+            <Button 
+              onPress={handleAdd} 
+              mode="contained" 
+              style={styles.buttonModal}
+            >
+              Submit
+            </Button>
           </Modal>
         </Portal>
         {/* Start of page */}

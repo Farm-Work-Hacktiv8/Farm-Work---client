@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { View, StyleSheet } from 'react-native'
-import { Card, Button, Title, Portal, Dialog, Paragraph, Modal, Divider, Text } from 'react-native-paper'
+import { Card, Button, Title, Portal, Dialog, Paragraph, Modal, Divider, Text, TextInput } from 'react-native-paper'
 import { useDispatch, useSelector } from 'react-redux'
 import { deletePlant, getOnePlant } from '../store/action'
 
@@ -8,20 +8,31 @@ export default function FieldItem({ data }) {
   const dispatch = useDispatch()
   const [visible, setVisible] = useState(false)
   const [modalVisible, setModalVisible] = useState(false)
+  const [editModal, setEditModal] = useState(false)
   const plantDetail = useSelector(state => state.plantDetail)
 
   const hideModal = () => { setModalVisible(false) }
-  
+  const hideEdit = () => { setEditModal(false) }
+
   function handleDelete() {
     setVisible(false)
     dispatch(deletePlant(data.id, data.fieldsId))
   }
-  
+
   function handleDetail() {
     dispatch(getOnePlant(data.id))
     setModalVisible(true)
   }
 
+  function handleEdit() {
+    setEditModal(false)
+  }
+
+  function openEditModal() {
+    dispatch(getOnePlant(data.id))
+    setEditModal(true)
+  }
+  
   return (
     <View style={styles.container}>
       <Portal style={styles.deleteModal}>
@@ -46,13 +57,43 @@ export default function FieldItem({ data }) {
           <Card>
             <Card.Content>
               <Title style={styles.modalTitle}>{plantDetail.plantName}</Title>
-              <Divider style={styles.modalDivider}/>
+              <Divider style={styles.modalDivider} />
               <Text>Temperature: {plantDetail.temperature}&#8451;</Text>
               <Text>Air Humidity: 29&#8451;</Text>
               <Text>Ground Humidity: 28&#8451;</Text>
               <Text>Harvest Time: {plantDetail.harvestTime} days</Text>
             </Card.Content>
           </Card>
+        </Modal>
+      </Portal>
+      {/* End of modal detail plants */}
+      <Portal>
+        <Modal
+          visible={editModal}
+          onDismiss={hideEdit}
+          contentContainerStyle={styles.modalEdit}
+        >
+          <Title>Plant Detail</Title>
+          <TextInput
+            label="Plant Name:"
+            mode="outlined"
+            placeholder="Put your plant name here"
+            value={plantDetail.plantName}
+          />
+          <TextInput
+            label="Harvest Time:"
+            mode="outlined"
+            placeholder="Estimate day for harvesting your plant"
+            keyboardType="numeric"
+            value={plantDetail.harvestTime}
+          />
+          <Button
+            onPress={handleEdit}
+            mode="contained"
+            style={styles.buttonModal}
+          >
+            Submit
+          </Button>
         </Modal>
       </Portal>
       {/* Start of component */}
@@ -63,7 +104,7 @@ export default function FieldItem({ data }) {
         </Card.Content>
         <Card.Actions>
           <Button icon="arrow-right-bold-box" onPress={handleDetail}>Details</Button>
-          <Button icon="pencil-box">Edit</Button>
+          <Button icon="pencil-box" onPress={openEditModal}>Edit</Button>
           <Button icon="trash-can" onPress={() => setVisible(true)}>Delete</Button>
         </Card.Actions>
       </Card>
@@ -99,5 +140,15 @@ const styles = StyleSheet.create({
   },
   modalDivider: {
     marginBottom: 10
-  }
+  },
+  modalEdit: {
+    backgroundColor: '#ffe8d6',
+    padding: 20,
+    maxWidth: "95%",
+    marginHorizontal: 20
+  },
+  buttonModal: {
+    marginVertical: 10,
+    backgroundColor: "#b7b7a4"
+  },
 })
