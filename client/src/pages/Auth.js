@@ -51,9 +51,9 @@ export default function Auth (props) {
       console.log(err)
     }
     */
-    if (username && password) {
+    // if (username && password) {
       navigation.navigate('HomePage')
-    }
+    // }
   }
 
   function changePage (value) {

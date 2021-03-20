@@ -28,27 +28,27 @@
   "fields": [
     {
       "id": 1,
-      "fieldName": "Field A",
+      "fieldName": "FarmVilee",
       "fieldArea": 201
     },
     {
       "id": 2,
-      "fieldName": "Field B",
+      "fieldName": "Harvest Moon",
       "fieldArea": 769
     },
     {
       "id": 3,
-      "fieldName": "Field C",
+      "fieldName": "Stardew Valley",
       "fieldArea": 971
     },
     {
       "id": 4,
-      "fieldName": "Field D",
+      "fieldName": "Rune Factory",
       "fieldArea": 540
     },
     {
       "id": 5,
-      "fieldName": "Field E",
+      "fieldName": "Farm Work",
       "fieldArea": 859
     }
   ],
@@ -56,32 +56,92 @@
     {
       "id": 1,
       "plantName": "Plant A",
-      "harvestTime": 27
+      "harvestTime": 27,
+      "fieldsId": 1
     },
     {
       "id": 2,
       "plantName": "Plant B",
-      "harvestTime": 28
+      "harvestTime": 28,
+      "fieldsId": 2
     },
     {
       "id": 3,
       "plantName": "Plant C",
-      "harvestTime": 28
+      "harvestTime": 28,
+      "fieldsId": 3
     },
     {
       "id": 4,
       "plantName": "Plant D",
-      "harvestTime": 27
+      "harvestTime": 27,
+      "fieldsId": 4
     },
     {
       "id": 5,
       "plantName": "Plant E",
-      "harvestTime": 28
+      "harvestTime": 28,
+      "fieldsId": 5
     },
     {
       "id": 6,
       "plantName": "Plant F",
-      "harvestTime": 27
+      "harvestTime": 27,
+      "fieldsId": 1
+    },
+    {
+      "id": 7,
+      "plantName": "Plant F",
+      "harvestTime": 27,
+      "fieldsId": 2
+    },
+    {
+      "id": 8,
+      "plantName": "Plant F",
+      "harvestTime": 27,
+      "fieldsId": 3
+    },
+    {
+      "id": 9,
+      "plantName": "Plant F",
+      "harvestTime": 27,
+      "fieldsId": 4
+    },
+    {
+      "id": 10,
+      "plantName": "Plant F",
+      "harvestTime": 27,
+      "fieldsId": 5
+    },
+    {
+      "id": 11,
+      "plantName": "Plant F",
+      "harvestTime": 27,
+      "fieldsId": 1
+    },
+    {
+      "id": 12,
+      "plantName": "Plant F",
+      "harvestTime": 27,
+      "fieldsId": 2
+    },
+    {
+      "id": 13,
+      "plantName": "Plant F",
+      "harvestTime": 27,
+      "fieldsId": 3
+    },
+    {
+      "id": 14,
+      "plantName": "Plant F",
+      "harvestTime": 27,
+      "fieldsId": 4
+    },
+    {
+      "id": 15,
+      "plantName": "Plant F",
+      "harvestTime": 27,
+      "fieldsId": 5
     }
   ]
 }

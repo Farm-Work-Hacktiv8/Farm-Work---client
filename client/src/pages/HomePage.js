@@ -1,8 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from "react-redux"
 import { View, StyleSheet } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import { Button, Modal, Portal, TextInput, Title } from 'react-native-paper'
 import HomeItem from '../components/HomeItem'
+import { getFields } from "../store/action"
 
 export default function HomePage({ navigation }) {
   const [visible, setVisible] = useState(false)
@@ -16,7 +18,11 @@ export default function HomePage({ navigation }) {
     console.log(newField)
     setVisible(false)
   }
-  const item = ["Field Name A", "Field Name B", "Field Name C"]
+  const dispatch = useDispatch()
+  const fields = useSelector(state => state.fields)
+  useEffect(() => {
+    dispatch(getFields())
+  }, [])
   return (
     <View style={styles.container}>
       <ScrollView>
@@ -35,8 +41,8 @@ export default function HomePage({ navigation }) {
         <Title style={styles.title}>Your Field</Title>
         <Button icon="ballot" mode="contained" style={styles.buttonAdd} onPress={showModal}>Add Field</Button>
         {
-          item.map((data, index) => {
-            return <HomeItem data={data} key={index} navigation={navigation}/>
+          fields.map((data) => {
+            return <HomeItem data={data} key={data.id} navigation={navigation}/>
           })
         }
       </ScrollView>
