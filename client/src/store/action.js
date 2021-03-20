@@ -41,7 +41,7 @@ export function getPlants(id) {
   }
 }
 
-export function deletePlant (id, fieldId) {
+export function deletePlant(id, fieldId) {
   return async (dispatch) => {
     try {
       const response = await fetch(`http://localhost:3000/plants/${id}`, {
@@ -58,4 +58,17 @@ export function deletePlant (id, fieldId) {
 
 function setPlants(payload) {
   return { type: "PLANTS/GETPLANTS", payload }
+}
+
+export function getOnePlant(id) {
+  return async (dispatch) => {
+    try {
+      const response = await fetch(`http://localhost:3000/plants/${id}`)
+      const data = await response.json()
+      // console.log(data, "<<<<<<< di action");
+      dispatch({ type: "PLANTDETAIL/GETPLANTDETAIL", payload: data })
+    } catch ({ message }) {
+      console.log(message)
+    }
+  }
 }
