@@ -1,0 +1,87 @@
+{
+  "user": [
+    {
+      "id": 1,
+      "firstName": "test",
+      "lastName": "user",
+      "username": "testUser",
+      "email": "test@mail.com",
+      "password": "123456"
+    },
+    {
+      "id": 2,
+      "firstName": "jefri",
+      "lastName": "dimar",
+      "username": "jefriDimar",
+      "email": "jefriDimar@mail.com",
+      "password": "123456"
+    },
+    {
+      "id": 3,
+      "firstName": "leo",
+      "lastName": "arby",
+      "username": "leoArby",
+      "email": "leoarby@mail.com",
+      "password": "123456"
+    }
+  ],
+  "fields": [
+    {
+      "id": 1,
+      "fieldName": "Field A",
+      "fieldArea": 201
+    },
+    {
+      "id": 2,
+      "fieldName": "Field B",
+      "fieldArea": 769
+    },
+    {
+      "id": 3,
+      "fieldName": "Field C",
+      "fieldArea": 971
+    },
+    {
+      "id": 4,
+      "fieldName": "Field D",
+      "fieldArea": 540
+    },
+    {
+      "id": 5,
+      "fieldName": "Field E",
+      "fieldArea": 859
+    }
+  ],
+  "plants": [
+    {
+      "id": 1,
+      "plantName": "Plant A",
+      "harvestTime": 27
+    },
+    {
+      "id": 2,
+      "plantName": "Plant B",
+      "harvestTime": 28
+    },
+    {
+      "id": 3,
+      "plantName": "Plant C",
+      "harvestTime": 28
+    },
+    {
+      "id": 4,
+      "plantName": "Plant D",
+      "harvestTime": 27
+    },
+    {
+      "id": 5,
+      "plantName": "Plant E",
+      "harvestTime": 28
+    },
+    {
+      "id": 6,
+      "plantName": "Plant F",
+      "harvestTime": 27
+    }
+  ]
+}
