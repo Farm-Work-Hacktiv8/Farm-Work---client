@@ -29,7 +29,7 @@ function setFields(payload) {
   return { type: "FIELDS/GETFIELDS", payload }
 }
 
-export function addField (payload) {
+export function addField(payload) {
   return async (dispatch) => {
     try {
       const response = await fetch('http://localhost:3000/fields/', {
@@ -117,6 +117,25 @@ export function addPlants(payload, id) {
     try {
       const response = await fetch('http://localhost:3000/plants', {
         method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      })
+      dispatch(getPlants(id))
+    } catch ({ message }) {
+      console.log(message)
+    }
+  }
+}
+
+export function editPlants(payload, id) {
+  return async (dispatch) => {
+    try {
+      // console.log(payload, id, "<<<<<<<<<<di action")
+      const response = await fetch(`http://localhost:3000/plants/${id}`, {
+        method: 'PUT',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'

@@ -54,10 +54,10 @@
   ],
   "plants": [
     {
-      "id": 1,
-      "plantName": "Plant A",
-      "harvestTime": 27,
-      "fieldsId": 1
+      "plantName": "Plant A Test Update",
+      "harvestTime": "30",
+      "fieldsId": 1,
+      "id": 1
     },
     {
       "id": 2,

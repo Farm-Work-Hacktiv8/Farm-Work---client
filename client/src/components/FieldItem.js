@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { View, StyleSheet } from 'react-native'
 import { Card, Button, Title, Portal, Dialog, Paragraph, Modal, Divider, Text, TextInput } from 'react-native-paper'
 import { useDispatch, useSelector } from 'react-redux'
-import { deletePlant, getOnePlant } from '../store/action'
+import { deletePlant, getOnePlant, editPlants } from '../store/action'
 
 export default function FieldItem({ data }) {
   const dispatch = useDispatch()
@@ -10,7 +10,12 @@ export default function FieldItem({ data }) {
   const [modalVisible, setModalVisible] = useState(false)
   const [editModal, setEditModal] = useState(false)
   const plantDetail = useSelector(state => state.plantDetail)
-
+  const [newPlant, setNewPlant] = useState({
+    plantName: data.plantName,
+    harvestTime: data.harvestTime,
+    fieldsId: data.fieldsId
+  })
+  console.log(newPlant)
   const hideModal = () => { setModalVisible(false) }
   const hideEdit = () => { setEditModal(false) }
 
@@ -25,6 +30,7 @@ export default function FieldItem({ data }) {
   }
 
   function handleEdit() {
+    dispatch(editPlants(newPlant, data.id))
     setEditModal(false)
   }
 
@@ -32,7 +38,7 @@ export default function FieldItem({ data }) {
     dispatch(getOnePlant(data.id))
     setEditModal(true)
   }
-  
+
   return (
     <View style={styles.container}>
       <Portal style={styles.deleteModal}>
@@ -78,14 +84,16 @@ export default function FieldItem({ data }) {
             label="Plant Name:"
             mode="outlined"
             placeholder="Put your plant name here"
-            value={plantDetail.plantName}
+            value={newPlant.plantName}
+            onChange={(e) => { setNewPlant({ ...newPlant, plantName: e.target.value }) }}
           />
           <TextInput
             label="Harvest Time:"
             mode="outlined"
             placeholder="Estimate day for harvesting your plant"
             keyboardType="numeric"
-            value={plantDetail.harvestTime}
+            value={newPlant.harvestTime}
+            onChange={(e) => { setNewPlant({ ...newPlant, harvestTime: e.target.value }) }}
           />
           <Button
             onPress={handleEdit}
