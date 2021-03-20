@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import SwitchSelector from 'react-native-switch-selector'
-import { View, Text, StyleSheet } from 'react-native'
-import { Card, TextInput, Button, ToggleButton } from 'react-native-paper'
+import { View, ScrollView, StyleSheet } from 'react-native'
+import { Card, TextInput, Button} from 'react-native-paper'
 import * as SecureStore from 'expo-secure-store'
-
 
 export default function Auth (props) {
 
@@ -17,7 +16,7 @@ export default function Auth (props) {
   const option = [{ label: 'Register', value: 'register'}, { label: 'Login', value: 'login' }]
 
   useEffect(() => {
-    checkAuth()
+    // checkAuth()
   }, [])
 
   async function checkAuth () {
@@ -40,6 +39,7 @@ export default function Auth (props) {
   }
 
   async function confirmLogin () {
+    /*
     try {
       // console.log(username, password)
       //await SecureStore.setItemAsync('username', username)
@@ -50,9 +50,10 @@ export default function Auth (props) {
     } catch(err) {
       console.log(err)
     }
-    //if (username && password) {
-    //  navigation.navigate('HomePage')
-    //}
+    */
+    if (username && password) {
+      navigation.navigate('HomePage')
+    }
   }
 
   function changePage (value) {
@@ -60,7 +61,7 @@ export default function Auth (props) {
   }
 
   return (
-    <View>
+    <ScrollView>
       <Card style={ status === 'register' ? styles.cardRegister : styles.cardLogin }>
         <SwitchSelector 
           style={ styles.switchSelector }
@@ -123,7 +124,7 @@ export default function Auth (props) {
           <Button mode="contained" style={ styles.btn } onPress={confirmLogin}>Login</Button>
         }
       </Card>
-    </View>
+    </ScrollView>
   )
 }
 
