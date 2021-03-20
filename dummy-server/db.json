@@ -45,6 +45,11 @@
       "id": 4,
       "fieldName": "Rune Factory",
       "fieldArea": 540
+    },
+    {
+      "fieldName": "test field",
+      "fieldArea": "123",
+      "id": 5
     }
   ],
   "plants": [
