@@ -3,6 +3,11 @@ import { View, StyleSheet } from 'react-native'
 import { Card, Button, Title } from 'react-native-paper'
 
 export default function HomeItem({ navigation, data }) {
+
+  function handleDelete () {
+
+  }
+
   return (
     <View style={styles.container}>
       <Card style={[styles.card]}>
@@ -15,7 +20,7 @@ export default function HomeItem({ navigation, data }) {
         <Card.Actions>
           <Button icon="arrow-right-bold-box" onPress={() => { navigation.navigate('DetailFieldPage', { fieldsId: data.id }) }} >Details</Button>
           <Button icon="pencil-box">Edit</Button>
-          <Button icon="trash-can">Delete</Button>
+          <Button icon="trash-can" onPress={handleDelete}>Delete</Button>
         </Card.Actions>
       </Card>
     </View>
