@@ -45,11 +45,6 @@
       "id": 4,
       "fieldName": "Rune Factory",
       "fieldArea": 540
-    },
-    {
-      "id": 5,
-      "fieldName": "Farm Work",
-      "fieldArea": 859
     }
   ],
   "plants": [
@@ -78,12 +73,6 @@
       "fieldsId": 4
     },
     {
-      "id": 5,
-      "plantName": "Plant E",
-      "harvestTime": 28,
-      "fieldsId": 5
-    },
-    {
       "id": 6,
       "plantName": "Plant F",
       "harvestTime": 27,
@@ -106,12 +95,6 @@
       "plantName": "Plant F",
       "harvestTime": 27,
       "fieldsId": 4
-    },
-    {
-      "id": 10,
-      "plantName": "Plant F",
-      "harvestTime": 27,
-      "fieldsId": 5
     },
     {
       "id": 12,
