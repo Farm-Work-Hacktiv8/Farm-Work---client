@@ -9,16 +9,19 @@ export default function FieldItem({ data }) {
   const [visible, setVisible] = useState(false)
   const [modalVisible, setModalVisible] = useState(false)
   const plantDetail = useSelector(state => state.plantDetail)
+
+  const hideModal = () => { setModalVisible(false) }
+  
   function handleDelete() {
     setVisible(false)
     dispatch(deletePlant(data.id, data.fieldsId))
   }
   
-  const hideModal = () => { setModalVisible(false) }
   function handleDetail() {
     dispatch(getOnePlant(data.id))
     setModalVisible(true)
   }
+
   return (
     <View style={styles.container}>
       <Portal style={styles.deleteModal}>
@@ -33,6 +36,7 @@ export default function FieldItem({ data }) {
           </Dialog.Actions>
         </Dialog>
       </Portal>
+      {/* End of dialog */}
       <Portal>
         <Modal
           visible={modalVisible}
@@ -51,6 +55,7 @@ export default function FieldItem({ data }) {
           </Card>
         </Modal>
       </Portal>
+      {/* Start of component */}
       <Card style={[styles.card]}>
         <Card.Cover source={{ uri: "https://images.unsplash.com/photo-1492944557828-11e576351057?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" }} />
         <Card.Content>

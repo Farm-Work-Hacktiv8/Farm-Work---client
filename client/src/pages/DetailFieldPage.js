@@ -7,20 +7,23 @@ import FieldItem from '../components/FieldItem'
 import { getPlants } from "../store/action"
 
 export default function DetailFieldPage({ route, navigation }) {
+  const dispatch = useDispatch()
+
   const [visible, setVisible] = useState(false)
   const { fieldsId } = route.params
-
   const plants = useSelector(state => state.plants)
-  const dispatch = useDispatch()
+
   useEffect(() => {
     dispatch(getPlants(fieldsId))
   }, [])
 
   const showModal = () => { setVisible(true) }
   const hideModal = () => { setVisible(false) }
+  
   const handleAdd = () => {
     setVisible(false)
   }
+
   return (
     <View style={styles.container}>
       <ScrollView style={styles.container}>
@@ -36,6 +39,7 @@ export default function DetailFieldPage({ route, navigation }) {
             <Button onPress={handleAdd} mode="contained" style={styles.buttonModal}>Submit</Button>
           </Modal>
         </Portal>
+        {/* Start of page */}
         <Title style={styles.title}>Your Plant</Title>
         <Button icon="ballot" mode="contained" style={styles.button} onPress={showModal}>Add Plant</Button>
         {
