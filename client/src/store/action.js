@@ -10,6 +10,21 @@ export function getFields() {
   }
 }
 
+export function deleteField(id) {
+  return async (dispatch) => {
+    try {
+      const response = await fetch(`http://localhost:3000/fields/${id}`, {
+        method: 'DELETE'
+      })
+      const message = await response.json()
+      console.log(message)
+      dispatch(getFields())
+    } catch (err) {
+      console.log(err)
+    }
+  }
+}
+
 function setFields(payload) {
   return { type: "FIELDS/GETFIELDS", payload }
 }
@@ -22,6 +37,21 @@ export function getPlants(id) {
       dispatch(setPlants(data))
     } catch ({ message }) {
       console.log(message)
+    }
+  }
+}
+
+export function deletePlant (id, fieldId) {
+  return async (dispatch) => {
+    try {
+      const response = await fetch(`http://localhost:3000/plants/${id}`, {
+        method: 'DELETE'
+      })
+      const message = await response.json()
+      console.log(message)
+      dispatch(getPlants(fieldId))
+    } catch (err) {
+      console.log(err)
     }
   }
 }

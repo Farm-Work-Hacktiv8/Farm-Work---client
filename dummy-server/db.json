@@ -114,12 +114,6 @@
       "fieldsId": 5
     },
     {
-      "id": 11,
-      "plantName": "Plant F",
-      "harvestTime": 27,
-      "fieldsId": 1
-    },
-    {
       "id": 12,
       "plantName": "Plant F",
       "harvestTime": 27,
@@ -136,12 +130,6 @@
       "plantName": "Plant F",
       "harvestTime": 27,
       "fieldsId": 4
-    },
-    {
-      "id": 15,
-      "plantName": "Plant F",
-      "harvestTime": 27,
-      "fieldsId": 5
     }
   ]
 }
