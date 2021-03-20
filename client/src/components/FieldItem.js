@@ -15,7 +15,6 @@ export default function FieldItem({ data }) {
     harvestTime: data.harvestTime,
     fieldsId: data.fieldsId
   })
-  console.log(newPlant)
   const hideModal = () => { setModalVisible(false) }
   const hideEdit = () => { setEditModal(false) }
 
@@ -30,7 +29,7 @@ export default function FieldItem({ data }) {
   }
 
   function handleEdit() {
-    dispatch(editPlants(newPlant, data.id))
+    dispatch(editPlants(newPlant, data.id, data.fieldsId))
     setEditModal(false)
   }
 
@@ -64,10 +63,10 @@ export default function FieldItem({ data }) {
             <Card.Content>
               <Title style={styles.modalTitle}>{plantDetail.plantName}</Title>
               <Divider style={styles.modalDivider} />
-              <Text>Temperature: {plantDetail.temperature}&#8451;</Text>
+              <Text>Temperature: 30&#8451;</Text>
               <Text>Air Humidity: 29&#8451;</Text>
               <Text>Ground Humidity: 28&#8451;</Text>
-              <Text>Harvest Time: {plantDetail.harvestTime} days</Text>
+              <Text>Harvest Time: {plantDetail.harvestTime} days remaining</Text>
             </Card.Content>
           </Card>
         </Modal>
