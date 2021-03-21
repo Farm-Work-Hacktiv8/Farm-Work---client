@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux"
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, Text } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import { Button, Modal, Portal, TextInput, Title } from 'react-native-paper'
 import HomeItem from '../components/HomeItem'
@@ -12,10 +12,15 @@ export default function HomePage({ navigation }) {
   const [fieldArea, setFieldArea] = useState('')
   const dispatch = useDispatch()
   const fields = useSelector(state => state.fields)
+  const access_token = useSelector(state => state.access_token)
 
   useEffect(() => {
-    dispatch(getFields())
-  }, [])
+    if(access_token){
+      dispatch(getFields(access_token))
+    }else{
+      console.log('no acces token')
+    }
+  }, [access_token, dispatch])
 
   function handleAdd () {
     const payload = {
@@ -31,46 +36,52 @@ export default function HomePage({ navigation }) {
     setFieldName('')
     setVisible(false)
   }
-
-  return (
-    <View style={styles.container}>
-      <ScrollView>
-        <Portal>
-          <Modal 
-            visible={visible} 
-            onDismiss={() => setVisible(false)} 
-            contentContainerStyle={styles.modal}
-          >
-            <Title>Add Field</Title>
-            <TextInput
-              label="Field Name"
-              mode="outlined"
-              placeholder="name your field"
-              value={fieldName}
-              onChangeText={text => setFieldName(text)} 
-            />
-            <TextInput
-              label="Field Area"
-              mode="outlined"
-              placeholder="In Hectare"
-              keyboardType="numeric"
-              value={fieldArea}
-              onChangeText={text => setFieldArea(text)}
-            />
-            <Button onPress={handleAdd} style={styles.buttonModal} mode="outlined">Submit</Button>
-            <Button onPress={handleCancel} style={styles.buttonModal} mode="outlined">Cancel</Button>
-          </Modal>
-        </Portal>
-        <Title style={styles.title}>Your Field</Title>
-        <Button icon="ballot" mode="contained" style={styles.buttonAdd} onPress={() => setVisible(true)}>Add Field</Button>
-        {
-          fields.map((data) => {
-            return <HomeItem data={data} key={data.id} navigation={navigation}/>
-          })
-        }
-      </ScrollView>
-    </View>
-  )
+  console.log(fields)
+  if (fields.length === 0){
+    return (
+      <Text>Loading.....</Text>
+    )
+  }else{
+    return (
+      <View style={styles.container}>
+        <ScrollView>
+          <Portal>
+            <Modal 
+              visible={visible} 
+              onDismiss={() => setVisible(false)} 
+              contentContainerStyle={styles.modal}
+            >
+              <Title>Add Field</Title>
+              <TextInput
+                label="Field Name"
+                mode="outlined"
+                placeholder="name your field"
+                value={fieldName}
+                onChangeText={text => setFieldName(text)} 
+              />
+              <TextInput
+                label="Field Area"
+                mode="outlined"
+                placeholder="In Hectare"
+                keyboardType="numeric"
+                value={fieldArea}
+                onChangeText={text => setFieldArea(text)}
+              />
+              <Button onPress={handleAdd} style={styles.buttonModal} mode="outlined">Submit</Button>
+              <Button onPress={handleCancel} style={styles.buttonModal} mode="outlined">Cancel</Button>
+            </Modal>
+          </Portal>
+          <Title style={styles.title}>Your Field</Title>
+          <Button icon="ballot" mode="contained" style={styles.buttonAdd} onPress={() => setVisible(true)}>Add Field</Button>
+          {
+            fields.map((data) => {
+              return <HomeItem data={data} key={data.id} navigation={navigation}/>
+            })
+          }
+        </ScrollView>
+      </View>
+    )
+  }
 }
 
 const styles = StyleSheet.create({
