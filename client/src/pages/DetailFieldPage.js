@@ -17,16 +17,17 @@ export default function DetailFieldPage({ route, navigation }) {
     harvestTime: "",
     fieldsId
   })
+  const access_token = useSelector(state => state.access_token)
 
   useEffect(() => {
-    dispatch(getPlants(fieldsId))
+    dispatch(getPlants(fieldsId, access_token))
   }, [])
 
   const showModal = () => { setVisible(true) }
   const hideModal = () => { setVisible(false) }
   
   const handleAdd = () => {
-    dispatch(addPlants(newPlant, fieldsId))
+    dispatch(addPlants(newPlant, fieldsId, access_token))
     setVisible(false)
   }
 

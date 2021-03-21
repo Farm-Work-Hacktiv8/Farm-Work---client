@@ -64,7 +64,7 @@ export function addField(payload, access_token) {
 }
 
 export function editField (payload, id, access_token) {
-  console.log(access_token, '<edit action')
+  
   return async (dispatch) => {
     try {
       const response = await fetch(`http://localhost:3000/fields/${id}`, {
@@ -84,12 +84,19 @@ export function editField (payload, id, access_token) {
   }
 }
 
-export function getPlants(id) {
+export function getPlants(FieldId, access_token) {
+  console.log(access_token, '<< get plants')
   return async (dispatch) => {
     try {
-      const response = await fetch(`http://localhost:3000/${id}`)
+      const response = await fetch(`http://localhost:3000/plants/${FieldId}`, {
+        headers: {
+          access_token: access_token.access_token,
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
       const data = await response.json()
-      dispatch(setPlants(data))
+      dispatch(setPlants(data.Plants))
     } catch ({ message }) {
       console.log(message)
     }
@@ -128,18 +135,19 @@ export function getOnePlant(id) {
   }
 }
 
-export function addPlants(payload, id) {
+export function addPlants(payload, id, access_token) {
   return async (dispatch) => {
     try {
-      const response = await fetch('http://localhost:3000/plants', {
+      const response = await fetch(`http://localhost:3000/plants/${id}`, {
         method: 'POST',
         headers: {
+          access_token : access_token.access_token,
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(payload)
       })
-      dispatch(getPlants(id))
+      dispatch(getPlants(id, access_token))
     } catch ({ message }) {
       console.log(message)
     }
@@ -210,6 +218,27 @@ export function login (payload, navigation) {
       }
     } catch (err) {
       
+    }
+  }
+}
+
+function setIndicator (payload){
+  return {type: 'INDICATOR/SET_INDICATOR', payload}
+}
+export function indicator (access_token) {
+  return async (dispatch) => {
+    try {
+      const data = await fetch(`http://localhost:3000/data`, {
+        headers: {
+          access_token: access_token.access_token,
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+      const result = await data.json()
+      dispatch(setIndicator(result))
+    } catch (err) {
+      console.log(err)
     }
   }
 }

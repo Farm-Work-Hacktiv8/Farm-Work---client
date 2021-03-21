@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { View, StyleSheet } from 'react-native'
 import { Card, Button, Title, Portal, Dialog, Paragraph, Modal, Divider, Text, TextInput } from 'react-native-paper'
 import { useDispatch, useSelector } from 'react-redux'
-import { deletePlant, getOnePlant, editPlants } from '../store/action'
+import { deletePlant, getOnePlant, editPlants, indicator } from '../store/action'
 
 export default function FieldItem({ data }) {
   const dispatch = useDispatch()
@@ -18,6 +18,8 @@ export default function FieldItem({ data }) {
   console.log(newPlant)
   const hideModal = () => { setModalVisible(false) }
   const hideEdit = () => { setEditModal(false) }
+  const dataIndicator = useSelector(state => state.indicator)
+  const access_token = useSelector(state => state.access_token)
 
   function handleDelete() {
     setVisible(false)
@@ -25,7 +27,7 @@ export default function FieldItem({ data }) {
   }
 
   function handleDetail() {
-    dispatch(getOnePlant(data.id))
+    dispatch(indicator(access_token))
     setModalVisible(true)
   }
 
@@ -62,12 +64,12 @@ export default function FieldItem({ data }) {
         >
           <Card>
             <Card.Content>
-              <Title style={styles.modalTitle}>{plantDetail.plantName}</Title>
+              <Title style={styles.modalTitle}>{data.plantName}</Title>
               <Divider style={styles.modalDivider} />
-              <Text>Temperature: {plantDetail.temperature}&#8451;</Text>
-              <Text>Air Humidity: 29&#8451;</Text>
-              <Text>Ground Humidity: 28&#8451;</Text>
-              <Text>Harvest Time: {plantDetail.harvestTime} days</Text>
+              <Text>Temperature: {dataIndicator.temperature}&#8451;</Text>
+              <Text>Air Humidity: {dataIndicator.humidity} % RH</Text>
+              <Text>Ground Humidity: {dataIndicator.moisture} PH</Text>
+              <Text>Harvest Time: {data.harvestTime} days</Text>
             </Card.Content>
           </Card>
         </Modal>
