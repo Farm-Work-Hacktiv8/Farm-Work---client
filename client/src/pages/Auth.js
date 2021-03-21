@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import SwitchSelector from 'react-native-switch-selector'
 import { View, ScrollView, StyleSheet } from 'react-native'
 import { Card, TextInput, Button} from 'react-native-paper'
+import {register, login} from '../store/action'
+import {useDispatch} from 'react-redux'
 import * as SecureStore from 'expo-secure-store'
 
 export default function Auth (props) {
@@ -14,6 +16,8 @@ export default function Auth (props) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const option = [{ label: 'Register', value: 'register'}, { label: 'Login', value: 'login' }]
+  const dispatch = useDispatch()
+  
 
   useEffect(() => {
     // checkAuth()
@@ -35,7 +39,15 @@ export default function Auth (props) {
 
   function confirmRegister (e) {
     e.preventDefault()
-    console.log(username, firstName, lastName, email, password)
+    //console.log(username, firstName, lastName, email, password)
+    const newUser = {
+      firstName,
+      lastName,
+      username,
+      email,
+      password
+    }
+    dispatch(register(newUser))
   }
 
   async function confirmLogin () {
@@ -53,6 +65,7 @@ export default function Auth (props) {
     */
     // if (username && password) {
       navigation.navigate('HomePage')
+      dispatch(login({username, password}), navigation)
     // }
   }
 
