@@ -1,7 +1,15 @@
-export function getFields() {
+
+export function getFields(access_token) {
+  console.log(access_token, '<<< token get fields')
   return async (dispatch) => {
     try {
-      const response = await fetch('http://localhost:3000/fields')
+      const response = await fetch('http://localhost:3000/fields', {
+        headers: {
+          access_token : access_token.access_token,
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
       const data = await response.json()
       dispatch(setFields(data))
     } catch ({ message }) {
@@ -71,7 +79,7 @@ export function editField (payload, id) {
 export function getPlants(id) {
   return async (dispatch) => {
     try {
-      const response = await fetch(`http://localhost:3000/plants/?fieldsId=${id}`)
+      const response = await fetch(`http://localhost:3000/${id}`)
       const data = await response.json()
       dispatch(setPlants(data))
     } catch ({ message }) {
@@ -145,6 +153,55 @@ export function editPlants(payload, id) {
       dispatch(getPlants(id))
     } catch ({ message }) {
       console.log(message)
+    }
+  }
+}
+
+function setAccess_token (payload) {
+  return {type: 'TOKEN/SET_TOKEN', payload}
+}
+
+export function register (payload) {
+  return async (dispatch) => {
+    try {
+      const response = await fetch(`http://localhost:3000/register`, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      })
+      const data = await response.json()
+      dispatch(login({username: data.username, password: payload.password}))
+    } catch (err) {
+      console.log(err)
+    }
+  }
+}
+
+export function login (payload, navigation) {
+  console.log(payload, '<<< login di action')
+  return async (dispatch) => {
+    try {
+      const response = await fetch(`http://localhost:3000/login`, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      })
+      const access_token = await response.json()
+      console.log(access_token, '<< ini di action ')
+      dispatch(setAccess_token(access_token))
+      if(access_token){
+        navigation.navigate('HomePage')
+      }else{
+        navigation.navigate('Auth')
+      }
+    } catch (err) {
+      
     }
   }
 }

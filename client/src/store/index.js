@@ -4,7 +4,8 @@ import thunk from 'redux-thunk'
 const initialState = {
   fields: [],
   plants: [],
-  plantDetail: {}
+  plantDetail: {},
+  access_token: ''
 }
 
 function plantsReducer(state = initialState, actions) {
@@ -16,6 +17,8 @@ function plantsReducer(state = initialState, actions) {
       return { ...state, fields: payload }
     case "PLANTDETAIL/GETPLANTDETAIL":
       return { ...state, plantDetail: payload }
+    case "TOKEN/SET_TOKEN" :
+      return {...state, access_token: payload}
     default:
       return state
   }
