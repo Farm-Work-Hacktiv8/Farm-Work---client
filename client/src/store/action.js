@@ -18,15 +18,20 @@ export function getFields(access_token) {
   }
 }
 
-export function deleteField(id) {
+export function deleteField(id, access_token) {
   return async (dispatch) => {
     try {
       const response = await fetch(`http://localhost:3000/fields/${id}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: {
+          access_token : access_token.access_token,
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
       })
       const message = await response.json()
       console.log(message)
-      dispatch(getFields())
+      dispatch(getFields(access_token))
     } catch (err) {
       console.log(err)
     }
@@ -37,12 +42,13 @@ function setFields(payload) {
   return { type: "FIELDS/GETFIELDS", payload }
 }
 
-export function addField(payload) {
+export function addField(payload, access_token) {
   return async (dispatch) => {
     try {
-      const response = await fetch('http://localhost:3000/fields/', {
+      const response = await fetch('http://localhost:3000/fields', {
         method: 'POST',
         headers: {
+          access_token : access_token.access_token,
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
@@ -50,26 +56,28 @@ export function addField(payload) {
       })
       const data = await response.json()
       console.log(data)
-      dispatch(getFields())
+      dispatch(getFields(access_token))
     } catch (err) {
       console.log(err)
     }
   }
 }
 
-export function editField (payload, id) {
+export function editField (payload, id, access_token) {
+  console.log(access_token, '<edit action')
   return async (dispatch) => {
     try {
       const response = await fetch(`http://localhost:3000/fields/${id}`, {
         method: 'PUT',
         headers: {
+          access_token: access_token.access_token,
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(payload)
       })
       const data = await response.json()
-      dispatch(getFields())
+      dispatch(getFields(access_token))
     } catch (err) {
       console.log(err)
     }

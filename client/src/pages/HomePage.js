@@ -27,7 +27,7 @@ export default function HomePage({ navigation }) {
       fieldName,
       fieldArea
     }
-    dispatch(addField(payload))
+    dispatch(addField(payload, access_token))
     handleCancel()
   }
 
