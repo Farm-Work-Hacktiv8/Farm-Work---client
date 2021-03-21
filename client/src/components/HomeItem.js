@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { View, StyleSheet } from 'react-native'
 import { Card, Button, Title, Portal, Dialog, Paragraph, Modal, TextInput } from 'react-native-paper'
 import { deleteField, editField } from '../store/action'
@@ -11,10 +11,11 @@ export default function HomeItem({ navigation, data }) {
   const [fieldName, setFieldName] = useState(data.fieldName)
   const [fieldArea, setFieldArea] = useState(data.fieldArea)
   const dispatch = useDispatch()
+  const access_token = useSelector(state => state.access_token)
 
   function handleDelete () {
     setVisible(false)
-    dispatch(deleteField(data.id))
+    dispatch(deleteField(data.id, access_token))
   }
 
   function handleEdit () {
@@ -22,7 +23,7 @@ export default function HomeItem({ navigation, data }) {
       fieldName,
       fieldArea
     }
-    dispatch(editField(payload, data.id))
+    dispatch(editField(payload, data.id, access_token))
     handleCancel()
   }
 
