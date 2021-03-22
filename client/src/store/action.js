@@ -146,7 +146,7 @@ export function addPlants(payload, id) {
   }
 }
 
-export function editPlants(payload, id) {
+export function editPlants(payload, id, fieldsId) {
   return async (dispatch) => {
     try {
       // console.log(payload, id, "<<<<<<<<<<di action")
@@ -158,7 +158,7 @@ export function editPlants(payload, id) {
         },
         body: JSON.stringify(payload)
       })
-      dispatch(getPlants(id))
+      dispatch(getPlants(fieldsId))
     } catch ({ message }) {
       console.log(message)
     }

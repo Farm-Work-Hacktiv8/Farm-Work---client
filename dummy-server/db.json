@@ -78,10 +78,10 @@
       "fieldsId": 4
     },
     {
-      "id": 6,
-      "plantName": "Plant F",
+      "plantName": "Plant Apaan aja",
       "harvestTime": 27,
-      "fieldsId": 1
+      "fieldsId": 1,
+      "id": 6
     },
     {
       "id": 7,
@@ -96,10 +96,10 @@
       "fieldsId": 3
     },
     {
-      "id": 9,
-      "plantName": "Plant F",
+      "plantName": "Plant Update Dong",
       "harvestTime": 27,
-      "fieldsId": 4
+      "fieldsId": 4,
+      "id": 9
     },
     {
       "id": 12,
@@ -108,16 +108,22 @@
       "fieldsId": 2
     },
     {
-      "id": 13,
-      "plantName": "Plant F",
+      "plantName": "Kucing Kucingan",
       "harvestTime": 27,
-      "fieldsId": 3
+      "fieldsId": 3,
+      "id": 13
     },
     {
-      "id": 14,
-      "plantName": "Plant F",
-      "harvestTime": 27,
-      "fieldsId": 4
+      "plantName": "Kucing Kucingan",
+      "harvestTime": "30",
+      "fieldsId": 4,
+      "id": 14
+    },
+    {
+      "plantName": "Lidah Kucing",
+      "harvestTime": "27",
+      "fieldsId": 1,
+      "id": 15
     }
   ]
 }
