@@ -2,42 +2,45 @@ import React, { useState } from 'react'
 import { View, StyleSheet } from 'react-native'
 import { Card, Button, Title, Portal, Dialog, Paragraph, Modal, Divider, Text, TextInput } from 'react-native-paper'
 import { useDispatch, useSelector } from 'react-redux'
-import { deletePlant, getOnePlant, editPlants } from '../store/action'
+import { deletePlant, getIndicator, editPlants } from '../store/action'
 
 export default function FieldItem({ data }) {
   const dispatch = useDispatch()
   const [visible, setVisible] = useState(false)
   const [modalVisible, setModalVisible] = useState(false)
   const [editModal, setEditModal] = useState(false)
-  const plantDetail = useSelector(state => state.plantDetail)
+  const access_token = useSelector(state => state.access_token)
   const [newPlant, setNewPlant] = useState({
     plantName: data.plantName,
     harvestTime: data.harvestTime,
-    fieldsId: data.fieldsId
+    fieldsId: data.PlantFields.fieldId
   })
   const hideModal = () => { setModalVisible(false) }
   const hideEdit = () => { setEditModal(false) }
 
   function handleDelete() {
     setVisible(false)
-    dispatch(deletePlant(data.id, data.fieldsId))
+    dispatch(deletePlant(data.id, data.PlantFields.fieldId, access_token))
   }
 
   function handleDetail() {
-    dispatch(getOnePlant(data.id))
+    dispatch(getIndicator(access_token))
     setModalVisible(true)
   }
 
   function handleEdit() {
-    dispatch(editPlants(newPlant, data.id, data.fieldsId))
+    dispatch(editPlants(newPlant, data.id, data.PlantFields.fieldId, access_token))
     setEditModal(false)
   }
 
   function openEditModal() {
-    dispatch(getOnePlant(data.id))
+    setNewPlant({
+      plantName: data.plantName,
+      harvestTime: data.harvestTime
+    })
     setEditModal(true)
   }
-
+  console.log(access_token)
   return (
     <View style={styles.container}>
       <Portal style={styles.deleteModal}>
@@ -61,12 +64,12 @@ export default function FieldItem({ data }) {
         >
           <Card>
             <Card.Content>
-              <Title style={styles.modalTitle}>{plantDetail.plantName}</Title>
+              <Title style={styles.modalTitle}>{data.plantName}</Title>
               <Divider style={styles.modalDivider} />
               <Text>Temperature: 30&#8451;</Text>
               <Text>Air Humidity: 29&#8451;</Text>
               <Text>Ground Humidity: 28&#8451;</Text>
-              <Text>Harvest Time: {plantDetail.harvestTime} days remaining</Text>
+              <Text>Harvest Time: {data.harvestTime} days remaining</Text>
             </Card.Content>
           </Card>
         </Modal>
