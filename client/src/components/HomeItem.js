@@ -94,7 +94,8 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: "#ffe8d6",
     marginBottom: 20,
-    elevation: 4
+    elevation: 4,
+    marginHorizontal: 20
   },
   container: {
     backgroundColor: "#cb997e"
