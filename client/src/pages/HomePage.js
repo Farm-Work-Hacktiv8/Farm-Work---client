@@ -15,14 +15,14 @@ export default function HomePage({ navigation }) {
   const access_token = useSelector(state => state.access_token)
 
   useEffect(() => {
-    if(access_token){
+    if (access_token) {
       dispatch(getFields(access_token))
-    }else{
+    } else {
       console.log('no acces token')
     }
   }, [access_token, dispatch])
 
-  function handleAdd () {
+  function handleAdd() {
     const payload = {
       fieldName,
       fieldArea
@@ -31,58 +31,57 @@ export default function HomePage({ navigation }) {
     handleCancel()
   }
 
-  function handleCancel () {
+  function handleCancel() {
     setFieldArea('')
     setFieldName('')
     setVisible(false)
   }
-  console.log(fields)
-  if (fields.length === 0){
-    return (
-      <Text>Loading.....</Text>
-    )
-  }else{
-    return (
-      <View style={styles.container}>
-        <ScrollView>
-          <Portal>
-            <Modal 
-              visible={visible} 
-              onDismiss={() => setVisible(false)} 
-              contentContainerStyle={styles.modal}
-            >
-              <Title>Add Field</Title>
-              <TextInput
-                label="Field Name"
-                mode="outlined"
-                placeholder="name your field"
-                value={fieldName}
-                onChangeText={text => setFieldName(text)} 
-              />
-              <TextInput
-                label="Field Area"
-                mode="outlined"
-                placeholder="In Hectare"
-                keyboardType="numeric"
-                value={fieldArea}
-                onChangeText={text => setFieldArea(text)}
-              />
-              <Button onPress={handleAdd} style={styles.buttonModal} mode="outlined">Submit</Button>
-              <Button onPress={handleCancel} style={styles.buttonModal} mode="outlined">Cancel</Button>
-            </Modal>
-          </Portal>
-          <Title style={styles.title}>Your Field</Title>
-          <Button icon="ballot" mode="contained" style={styles.buttonAdd} onPress={() => setVisible(true)}>Add Field</Button>
-          {
+  return (
+    <View style={styles.container}>
+      <ScrollView>
+        <Portal>
+          <Modal
+            visible={visible}
+            onDismiss={() => setVisible(false)}
+            contentContainerStyle={styles.modal}
+          >
+            <Title>Add Field</Title>
+            <TextInput
+              label="Field Name"
+              mode="outlined"
+              placeholder="name your field"
+              value={fieldName}
+              onChangeText={text => setFieldName(text)}
+            />
+            <TextInput
+              label="Field Area"
+              mode="outlined"
+              placeholder="In Hectare"
+              keyboardType="numeric"
+              value={fieldArea}
+              onChangeText={text => setFieldArea(text)}
+            />
+            <Button onPress={handleAdd} style={styles.buttonModal} mode="outlined">Submit</Button>
+            <Button onPress={handleCancel} style={styles.buttonModal} mode="outlined">Cancel</Button>
+          </Modal>
+        </Portal>
+        <Title style={styles.title}>Your Field</Title>
+        <Button icon="ballot" mode="contained" style={styles.buttonAdd} onPress={() => setVisible(true)}>Add</Button>
+        {
+          fields.length === 0 ?
+            <View style={styles.containerEmpty}>
+              <Text style={styles.textEmpty}>Fields is empty</Text>
+              <Text style={styles.textEmpty}>Add one or more fields first</Text>
+            </View> : 
             fields.map((data) => {
-              return <HomeItem data={data} key={data.id} navigation={navigation}/>
-            })
-          }
-        </ScrollView>
-      </View>
-    )
-  }
+            return <HomeItem data={data} key={data.id} navigation={navigation} />
+          })
+        }
+      </ScrollView>
+    </View>
+  )
 }
+
 
 const styles = StyleSheet.create({
   title: {
@@ -94,19 +93,30 @@ const styles = StyleSheet.create({
   buttonAdd: {
     width: "30%",
     marginVertical: 20,
-    marginHorizontal: 125
+    marginHorizontal: 100
   },
   modal: {
     backgroundColor: '#ffe8d6',
     padding: 20,
     maxWidth: "95%",
-    marginHorizontal: 20
   },
   buttonModal: {
     marginVertical: 10,
     backgroundColor: "#b7b7a4"
   },
   container: {
-    backgroundColor: "#cb997e"
+    flex: 1,
+    backgroundColor: "#cb997e",
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  containerEmpty: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    height: "100%",
+  },
+  textEmpty: {
+    fontSize: 30
   }
 })

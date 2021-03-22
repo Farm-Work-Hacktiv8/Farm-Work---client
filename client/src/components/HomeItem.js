@@ -94,8 +94,6 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: "#ffe8d6",
     marginBottom: 20,
-    maxWidth: "95%",
-    marginHorizontal: 20,
     elevation: 4
   },
   container: {
@@ -104,7 +102,5 @@ const styles = StyleSheet.create({
   modal: {
     backgroundColor: '#ffe8d6',
     padding: 20,
-    maxWidth: "95%",
-    marginHorizontal: 20
   },
 })
