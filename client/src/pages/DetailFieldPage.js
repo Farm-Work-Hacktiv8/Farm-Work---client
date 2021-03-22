@@ -13,6 +13,8 @@ export default function DetailFieldPage({ route, navigation }) {
   const { fieldsId } = route.params
   const plants = useSelector(state => state.plants)
   const access_token = useSelector(state => state.access_token)
+  const [plantName, setPlantName] = useState('')
+  const [harvestTime, setHarvestTime] = useState('')
   const [newPlant, setNewPlant] = useState({
     plantName: "",
     harvestTime: "",
@@ -31,12 +33,18 @@ export default function DetailFieldPage({ route, navigation }) {
   const hideModal = () => { setVisible(false) }
 
   const handleAdd = () => {
-    dispatch(addPlants(newPlant, fieldsId, access_token))
+    const payload = {
+      plantName,
+      harvestTime,
+      fieldsId
+    }
+    console.log(payload, 'from pages')
+    dispatch(addPlants(payload, fieldsId, access_token))
     setVisible(false)
-    setNewPlant({
-      plantName: "",
-      harvestTime: "",
-    })
+    // setNewPlant({
+    //   plantName: "",
+    //   harvestTime: "",
+    // })
   }
   return (
     <View style={styles.container}>
@@ -52,14 +60,14 @@ export default function DetailFieldPage({ route, navigation }) {
               label="Plant Name:"
               mode="outlined"
               placeholder="Put your plant name here"
-              onChange={(e) => { setNewPlant({ ...newPlant, plantName: e.target.value }) }}
+              onChangeText={(text) => setPlantName(text)}
             />
             <TextInput
               label="Harvest Time:"
               mode="outlined"
               placeholder="Estimate day for harvesting your plant"
               keyboardType="numeric"
-              onChange={(e) => { setNewPlant({ ...newPlant, harvestTime: e.target.value }) }}
+              onChangeText={(text) => setHarvestTime(text)}
             />
             <Button
               onPress={handleAdd}

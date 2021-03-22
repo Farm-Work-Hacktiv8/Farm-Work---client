@@ -41,6 +41,7 @@ function setFields(payload) {
 }
 
 export function addField(payload, access_token) {
+  console.log(payload, 'add field')
   return async (dispatch) => {
     try {
       const response = await fetch('http://192.168.1.15:3000/fields', {
@@ -86,11 +87,7 @@ export function getPlants(fieldsId, access_token) {
   return async (dispatch) => {
     console.log(access_token, fieldsId, 'from get plants')
     try {
-<<<<<<< HEAD
-      const response = await fetch(`http://192.168.1.15/plants/${fieldsId}`, {
-=======
-      const response = await fetch(`http://localhost:3000/plants/${fieldsId}`, {
->>>>>>> 1eda24736690722480ba4a764dc0e78a5d31be63
+      const response = await fetch(`http://192.168.1.15:3000/plants/${fieldsId}`, {
         headers: {
           access_token: access_token.access_token,
           'Accept': 'application/json',
@@ -108,7 +105,7 @@ export function getPlants(fieldsId, access_token) {
 export function deletePlant(id, fieldId, access_token) {
   return async (dispatch) => {
     try {
-      const response = await fetch(`http://localhost:3000/plants/${fieldId}/${id}`, {
+      const response = await fetch(`http://192.168.1.15:3000/plants/${fieldId}/${id}`, {
         method: 'DELETE',
         headers: {
           access_token: access_token.access_token,
@@ -132,7 +129,7 @@ function setPlants(payload) {
 export function getIndicator(access_token) {
   return async (dispatch) => {
     try {
-      const response = await fetch(`http://localhost:3000/data`, {
+      const response = await fetch(`http://192.168.1.15:3000/data`, {
         headers: {
           access_token: access_token.access_token,
           'Accept': 'application/json',
@@ -149,9 +146,10 @@ export function getIndicator(access_token) {
 }
 
 export function addPlants(payload, id, access_token) {
+  console.log(payload, 'payload', id, 'id', access_token, 'add plants')
   return async (dispatch) => {
     try {
-      const response = await fetch(`http://localhost:3000/plants/${id}`, {
+      const response = await fetch(`http://192.168.1.15:3000/plants/${id}`, {
         method: 'POST',
         headers: {
           access_token : access_token.access_token,
@@ -170,7 +168,7 @@ export function addPlants(payload, id, access_token) {
 export function editPlants(payload, plantId, fieldId, access_token) {
   return async (dispatch) => {
     try {
-      const response = await fetch(`http://localhost:3000/plants/${fieldId}/${plantId}`, {
+      const response = await fetch(`http://192.168.1.15:3000/plants/${fieldId}/${plantId}`, {
         method: 'PUT',
         headers: {
           access_token : access_token.access_token,
@@ -209,11 +207,7 @@ export function register (payload) {
   }
 }
 
-<<<<<<< HEAD
 export function login (payload) {
-=======
-export function login (payload, navigation) {
->>>>>>> 1eda24736690722480ba4a764dc0e78a5d31be63
   return async (dispatch) => {
     try {
       const response = await fetch(`http://192.168.1.15:3000/login`, {
