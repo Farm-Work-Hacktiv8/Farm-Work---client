@@ -136,7 +136,7 @@ export function getIndicator(access_token) {
       })
       const data = await response.json()
       console.log(data, "<<<<<<< di action");
-      // dispatch({ type: "INDICATOR/SETINDICATOR", payload: data })
+      dispatch({ type: "INDICATOR/SETINDICATOR", payload: data })
     } catch ({ message }) {
       console.log(message)
     }
