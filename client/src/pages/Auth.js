@@ -2,32 +2,38 @@ import React, { useState, useEffect } from 'react'
 import SwitchSelector from 'react-native-switch-selector'
 import { View, ScrollView, StyleSheet } from 'react-native'
 import { Card, TextInput, Button} from 'react-native-paper'
-import {register, login} from '../store/action'
-import {useDispatch} from 'react-redux'
+import { register, login } from '../store/action'
+import { useDispatch, useSelector } from 'react-redux'
 import * as SecureStore from 'expo-secure-store'
 
 export default function Auth (props) {
 
   const navigation = props.navigation
-  const [status, setStatus] = useState('register')
+  const [status, setStatus] = useState('login')
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const option = [{ label: 'Register', value: 'register'}, { label: 'Login', value: 'login' }]
+  const option = [{ label: 'Login', value: 'login' }, { label: 'Register', value: 'register' }]
+  const access_token = useSelector(state => state.access_token)
   const dispatch = useDispatch()
   
 
   useEffect(() => {
-    // checkAuth()
-  }, [])
+    if (access_token) {
+      navigation.navigate('HomePage')
+    } else {
+      checkAuth()
+    }
+  }, [access_token])
 
   async function checkAuth () {
     try {
       const storeUsername = await SecureStore.getItemAsync('username')
       const storePassword = await SecureStore.getItemAsync('password')
-      if (username && password) {
+      console.log(storeUsername, storePassword, 'login from secureStore')
+      if (storeUsername && storePassword) {
         setUsername(storeUsername)
         setPassword(storePassword)
         confirmLogin()
@@ -51,20 +57,16 @@ export default function Auth (props) {
   }
 
   async function confirmLogin () {
-    /*
     try {
-      // console.log(username, password)
-      //await SecureStore.setItemAsync('username', username)
-      //await SecureStore.setItemAsync('password', password)
+      await SecureStore.setItemAsync('username', username)
+      await SecureStore.setItemAsync('password', password)
       const storeUsername = await SecureStore.getItemAsync('username')
       const storePassword = await SecureStore.getItemAsync('password')
-      console.log(storeUsername, storePassword)
+      console.log(storeUsername, storePassword, 'from store in login')
     } catch(err) {
       console.log(err)
     }
-    */
     // if (username && password) {
-      navigation.navigate('HomePage')
       dispatch(login({username, password}), navigation)
     // }
   }

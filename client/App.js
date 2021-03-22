@@ -17,7 +17,7 @@ export default function App() {
     <Provider store={store}>
       <PaperProvider>
         <NavigationContainer>
-          <Stack.Navigator initialRouteName="Auth">
+          <Stack.Navigator initialRouteName="Auth" screenOptions={{ headerShown: false }} >
             <Stack.Screen name="Auth" component={Auth} />
             <Stack.Screen name="HomePage" component={HomePage} />
             <Stack.Screen name="DetailFieldPage" component={DetailFieldPage} />
