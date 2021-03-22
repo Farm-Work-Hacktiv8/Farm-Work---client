@@ -99,6 +99,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffe8d6',
     padding: 20,
     maxWidth: "95%",
+    marginHorizontal: 20
   },
   buttonModal: {
     marginVertical: 10,

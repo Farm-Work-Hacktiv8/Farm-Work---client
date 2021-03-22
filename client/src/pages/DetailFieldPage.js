@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 import { useDispatch, useSelector } from "react-redux"
 import { ScrollView } from 'react-native-gesture-handler'
 import { Button, Title, Modal, Portal, TextInput } from 'react-native-paper'
@@ -29,7 +29,7 @@ export default function DetailFieldPage({ route, navigation }) {
     dispatch(addPlants(newPlant, fieldsId))
     setVisible(false)
   }
-
+  console.log(plants);
   return (
     <View style={styles.container}>
       <ScrollView style={styles.container}>
@@ -66,6 +66,11 @@ export default function DetailFieldPage({ route, navigation }) {
         <Title style={styles.title}>Your Plant</Title>
         <Button icon="ballot" mode="contained" style={styles.button} onPress={showModal}>Add Plant</Button>
         {
+          plants.length === 0 ? 
+          <View style={styles.container}>
+            <Text style={styles.textEmpty}>Plant is empty</Text>
+            <Text style={styles.textEmpty}>Add one or more plants first</Text>
+          </View> :
           plants.map((data) => {
             return <FieldItem data={data} key={data.id} navigation={navigation} />
           })
@@ -98,6 +103,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#b7b7a4"
   },
   container: {
-    backgroundColor: "#cb997e"
+    flex: 1,
+    backgroundColor: "#cb997e",
+  },
+  textEmpty: {
+    fontSize: 30
   }
 })
