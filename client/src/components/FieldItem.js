@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { View, StyleSheet } from 'react-native'
 import { Card, Button, Title, Portal, Dialog, Paragraph, Modal, Divider, Text, TextInput } from 'react-native-paper'
 import { useDispatch, useSelector } from 'react-redux'
-import { deletePlant, getOnePlant, editPlants } from '../store/action'
+import { deletePlant, editPlants } from '../store/action'
 
 export default function FieldItem({ data }) {
   const dispatch = useDispatch()
