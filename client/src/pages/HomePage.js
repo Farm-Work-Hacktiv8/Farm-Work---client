@@ -18,6 +18,7 @@ export default function HomePage({ navigation }) {
     if (access_token) {
       dispatch(getFields(access_token))
     } else {
+      navigation.navigate('Auth')
       console.log('no acces token')
     }
   }, [access_token, dispatch])

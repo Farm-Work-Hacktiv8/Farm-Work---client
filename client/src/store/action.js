@@ -1,9 +1,8 @@
-
 export function getFields(access_token) {
   console.log(access_token, '<<< token get fields')
   return async (dispatch) => {
     try {
-      const response = await fetch('http://localhost:3000/fields', {
+      const response = await fetch('http://192.168.1.15:3000/fields', {
         headers: {
           access_token : access_token.access_token,
           'Accept': 'application/json',
@@ -21,7 +20,7 @@ export function getFields(access_token) {
 export function deleteField(id, access_token) {
   return async (dispatch) => {
     try {
-      const response = await fetch(`http://localhost:3000/fields/${id}`, {
+      const response = await fetch(`http://192.168.1.15:3000/fields/${id}`, {
         method: 'DELETE',
         headers: {
           access_token : access_token.access_token,
@@ -45,7 +44,7 @@ function setFields(payload) {
 export function addField(payload, access_token) {
   return async (dispatch) => {
     try {
-      const response = await fetch('http://localhost:3000/fields', {
+      const response = await fetch('http://192.168.1.15:3000/fields', {
         method: 'POST',
         headers: {
           access_token : access_token.access_token,
@@ -67,7 +66,7 @@ export function editField (payload, id, access_token) {
   console.log(access_token, '<edit action')
   return async (dispatch) => {
     try {
-      const response = await fetch(`http://localhost:3000/fields/${id}`, {
+      const response = await fetch(`http://192.168.1.15:3000/fields/${id}`, {
         method: 'PUT',
         headers: {
           access_token: access_token.access_token,
@@ -87,7 +86,7 @@ export function editField (payload, id, access_token) {
 export function getPlants(id) {
   return async (dispatch) => {
     try {
-      const response = await fetch(`http://localhost:3000/${id}`)
+      const response = await fetch(`http://192.168.1.15:3000/${id}`)
       const data = await response.json()
       dispatch(setPlants(data))
     } catch ({ message }) {
@@ -99,7 +98,7 @@ export function getPlants(id) {
 export function deletePlant(id, fieldId) {
   return async (dispatch) => {
     try {
-      const response = await fetch(`http://localhost:3000/plants/${id}`, {
+      const response = await fetch(`http://192.168.1.15:3000/plants/${id}`, {
         method: 'DELETE'
       })
       const message = await response.json()
@@ -118,7 +117,7 @@ function setPlants(payload) {
 export function getOnePlant(id) {
   return async (dispatch) => {
     try {
-      const response = await fetch(`http://localhost:3000/plants/${id}`)
+      const response = await fetch(`http://192.168.1.15:3000/plants/${id}`)
       const data = await response.json()
       // console.log(data, "<<<<<<< di action");
       dispatch({ type: "PLANTDETAIL/GETPLANTDETAIL", payload: data })
@@ -131,7 +130,7 @@ export function getOnePlant(id) {
 export function addPlants(payload, id) {
   return async (dispatch) => {
     try {
-      const response = await fetch('http://localhost:3000/plants', {
+      const response = await fetch('http://192.168.1.15:3000/plants', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -150,7 +149,7 @@ export function editPlants(payload, id, fieldsId) {
   return async (dispatch) => {
     try {
       // console.log(payload, id, "<<<<<<<<<<di action")
-      const response = await fetch(`http://localhost:3000/plants/${id}`, {
+      const response = await fetch(`http://192.168.1.15:3000/plants/${id}`, {
         method: 'PUT',
         headers: {
           'Accept': 'application/json',
@@ -172,7 +171,7 @@ function setAccess_token (payload) {
 export function register (payload) {
   return async (dispatch) => {
     try {
-      const response = await fetch(`http://localhost:3000/register`, {
+      const response = await fetch(`http://192.168.1.15:3000/register`, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -188,11 +187,10 @@ export function register (payload) {
   }
 }
 
-export function login (payload, navigation) {
-  console.log(payload, '<<< login di action')
+export function login (payload) {
   return async (dispatch) => {
     try {
-      const response = await fetch(`http://localhost:3000/login`, {
+      const response = await fetch(`http://192.168.1.15:3000/login`, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -203,13 +201,8 @@ export function login (payload, navigation) {
       const access_token = await response.json()
       console.log(access_token, '<< ini di action ')
       dispatch(setAccess_token(access_token))
-      if(access_token){
-        navigation.navigate('HomePage')
-      }else{
-        navigation.navigate('Auth')
-      }
     } catch (err) {
-      
+      console.log(err)
     }
   }
 }
