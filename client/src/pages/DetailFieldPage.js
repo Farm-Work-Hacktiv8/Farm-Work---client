@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 import { useDispatch, useSelector } from "react-redux"
 import { ScrollView } from 'react-native-gesture-handler'
 import { Button, Title, Modal, Portal, TextInput } from 'react-native-paper'
@@ -12,6 +12,7 @@ export default function DetailFieldPage({ route, navigation }) {
   const [visible, setVisible] = useState(false)
   const { fieldsId } = route.params
   const plants = useSelector(state => state.plants)
+  const access_token = useSelector(state => state.access_token)
   const [newPlant, setNewPlant] = useState({
     plantName: "",
     harvestTime: "",
@@ -19,17 +20,24 @@ export default function DetailFieldPage({ route, navigation }) {
   })
 
   useEffect(() => {
-    dispatch(getPlants(fieldsId))
-  }, [])
+    if (access_token) {
+      dispatch(getPlants(fieldsId, access_token))
+    } else {
+      console.log("No access token")
+    }
+  }, [access_token, dispatch])
 
   const showModal = () => { setVisible(true) }
   const hideModal = () => { setVisible(false) }
-  
-  const handleAdd = () => {
-    dispatch(addPlants(newPlant, fieldsId))
-    setVisible(false)
-  }
 
+  const handleAdd = () => {
+    dispatch(addPlants(newPlant, fieldsId, access_token))
+    setVisible(false)
+    setNewPlant({
+      plantName: "",
+      harvestTime: "",
+    })
+  }
   return (
     <View style={styles.container}>
       <ScrollView style={styles.container}>
@@ -40,22 +48,22 @@ export default function DetailFieldPage({ route, navigation }) {
             contentContainerStyle={styles.modal}
           >
             <Title>Plant Detail</Title>
-            <TextInput 
-              label="Plant Name:" 
-              mode="outlined" 
+            <TextInput
+              label="Plant Name:"
+              mode="outlined"
               placeholder="Put your plant name here"
               onChange={(e) => { setNewPlant({ ...newPlant, plantName: e.target.value }) }}
             />
-            <TextInput 
-              label="Harvest Time:" 
-              mode="outlined" 
-              placeholder="Estimate day for harvesting your plant" 
+            <TextInput
+              label="Harvest Time:"
+              mode="outlined"
+              placeholder="Estimate day for harvesting your plant"
               keyboardType="numeric"
               onChange={(e) => { setNewPlant({ ...newPlant, harvestTime: e.target.value }) }}
             />
-            <Button 
-              onPress={handleAdd} 
-              mode="contained" 
+            <Button
+              onPress={handleAdd}
+              mode="contained"
               style={styles.buttonModal}
             >
               Submit
@@ -66,9 +74,14 @@ export default function DetailFieldPage({ route, navigation }) {
         <Title style={styles.title}>Your Plant</Title>
         <Button icon="ballot" mode="contained" style={styles.button} onPress={showModal}>Add Plant</Button>
         {
-          plants.map((data) => {
-            return <FieldItem data={data} key={data.id} navigation={navigation} />
-          })
+          plants.length === 0 ?
+            <View style={styles.container}>
+              <Text style={styles.textEmpty}>Plant is empty</Text>
+              <Text style={styles.textEmpty}>Add one or more plants first</Text>
+            </View> :
+            plants.map((data) => {
+              return <FieldItem data={data} key={data.id} navigation={navigation} />
+            })
         }
       </ScrollView>
     </View>
@@ -98,6 +111,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#b7b7a4"
   },
   container: {
-    backgroundColor: "#cb997e"
+    flex: 1,
+    backgroundColor: "#cb997e",
+  },
+  textEmpty: {
+    fontSize: 30
   }
 })

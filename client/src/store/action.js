@@ -86,7 +86,11 @@ export function getPlants(fieldsId, access_token) {
   return async (dispatch) => {
     console.log(access_token, fieldsId, 'from get plants')
     try {
+<<<<<<< HEAD
       const response = await fetch(`http://192.168.1.15/plants/${fieldsId}`, {
+=======
+      const response = await fetch(`http://localhost:3000/plants/${fieldsId}`, {
+>>>>>>> 1eda24736690722480ba4a764dc0e78a5d31be63
         headers: {
           access_token: access_token.access_token,
           'Accept': 'application/json',
@@ -205,7 +209,11 @@ export function register (payload) {
   }
 }
 
+<<<<<<< HEAD
 export function login (payload) {
+=======
+export function login (payload, navigation) {
+>>>>>>> 1eda24736690722480ba4a764dc0e78a5d31be63
   return async (dispatch) => {
     try {
       const response = await fetch(`http://192.168.1.15:3000/login`, {

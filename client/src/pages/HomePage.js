@@ -94,12 +94,13 @@ const styles = StyleSheet.create({
   buttonAdd: {
     width: "30%",
     marginVertical: 20,
-    marginHorizontal: 100
+    marginHorizontal: 140
   },
   modal: {
     backgroundColor: '#ffe8d6',
     padding: 20,
     maxWidth: "95%",
+    marginHorizontal: 20
   },
   buttonModal: {
     marginVertical: 10,
@@ -108,8 +109,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#cb997e",
-    alignItems: "center",
-    justifyContent: "center"
   },
   containerEmpty: {
     flex: 1,
