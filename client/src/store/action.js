@@ -1,4 +1,3 @@
-
 export function getFields(access_token) {
   console.log(access_token, '<<< token get fields')
   return async (dispatch) => {
