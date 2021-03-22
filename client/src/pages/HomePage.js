@@ -48,6 +48,7 @@ export default function HomePage({ navigation }) {
           >
             <Title>Add Field</Title>
             <TextInput
+              style={ styles.textInput }
               label="Field Name"
               mode="outlined"
               placeholder="name your field"
@@ -55,6 +56,7 @@ export default function HomePage({ navigation }) {
               onChangeText={text => setFieldName(text)}
             />
             <TextInput
+              style={ styles.textInput }
               label="Field Area"
               mode="outlined"
               placeholder="In Hectare"
@@ -63,7 +65,6 @@ export default function HomePage({ navigation }) {
               onChangeText={text => setFieldArea(text)}
             />
             <Button onPress={handleAdd} style={styles.buttonModal} mode="outlined">Submit</Button>
-            <Button onPress={handleCancel} style={styles.buttonModal} mode="outlined">Cancel</Button>
           </Modal>
         </Portal>
         <Title style={styles.title}>Your Field</Title>
@@ -92,9 +93,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   },
   buttonAdd: {
-    width: "30%",
+    width: "40%",
     marginVertical: 20,
-    marginHorizontal: 140
+    marginHorizontal: 110
   },
   modal: {
     backgroundColor: '#ffe8d6',
@@ -104,7 +105,7 @@ const styles = StyleSheet.create({
   },
   buttonModal: {
     marginVertical: 10,
-    backgroundColor: "#b7b7a4"
+    backgroundColor: "#cb997e"
   },
   container: {
     flex: 1,
@@ -118,5 +119,8 @@ const styles = StyleSheet.create({
   },
   textEmpty: {
     fontSize: 30
+  },
+  textInput: {
+    height: 45
   }
 })

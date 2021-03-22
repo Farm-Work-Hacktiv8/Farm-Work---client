@@ -5,7 +5,8 @@ const initialState = {
   fields: [],
   plants: [],
   indicator: {},
-  access_token: ''
+  access_token: '',
+  loading: false
 }
 
 function plantsReducer(state = initialState, actions) {
