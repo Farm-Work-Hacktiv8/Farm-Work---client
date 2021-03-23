@@ -100,7 +100,7 @@ export default function DetailFieldPage({ route, navigation }) {
 
 const styles = StyleSheet.create({
   title: {
-    marginTop: 20,
+    marginTop: 50,
     textAlign: 'center',
     fontSize: 30,
     fontWeight: 'bold'
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
   },
   buttonModal: {
     marginVertical: 10,
-    backgroundColor: "#b7b7a4"
+    backgroundColor: "#cb997e"
   },
   container: {
     flex: 1,

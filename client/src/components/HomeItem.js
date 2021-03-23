@@ -66,11 +66,10 @@ export default function HomeItem({ navigation, data }) {
             mode="outlined"
             placeholder="In Hectare"
             keyboardType="numeric"
-            value={fieldArea}
+            value={(fieldArea) + ''}
             onChangeText={text => setFieldArea(text)}
           />
           <Button onPress={handleEdit} style={styles.buttonModal} mode="outlined">Submit</Button>
-          <Button onPress={handleCancel} style={styles.buttonModal} mode="outlined">Cancel</Button>
         </Modal>
       </Portal>
       <Card style={[styles.card]}>
@@ -105,4 +104,8 @@ const styles = StyleSheet.create({
     padding: 20,
     marginHorizontal: 20
   },
+  buttonModal: {
+    marginVertical: 10,
+    backgroundColor: "#cb997e"
+  }
 })
