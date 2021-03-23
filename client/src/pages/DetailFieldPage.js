@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import { useDispatch, useSelector } from "react-redux"
 import { ScrollView } from 'react-native-gesture-handler'
-import { Button, Title, Modal, Portal, TextInput, ActivityIndicator, Colors, Snackbar } from 'react-native-paper'
+import { Button, Title, Modal, Portal, TextInput, ActivityIndicator, Colors, Snackbar, Appbar } from 'react-native-paper'
 import FieldItem from '../components/FieldItem'
 import { getPlants, addPlants, error } from "../store/action"
 
@@ -52,11 +52,26 @@ export default function DetailFieldPage({ route, navigation }) {
     setSnackbar(false)
   }
 
+  async function handleLogout() {
+    try {
+      setAccess_token("")
+      await SecureStore.deleteItemAsync('username')
+      await SecureStore.deleteItemAsync('password')
+      navigation.navigate("Auth")
+    } catch (error) {
+      console.log(error, "<<< erorr logout");
+    }
+  }
+
   if (loading) {
     return <ActivityIndicator size={100} animating={true} color={Colors.blue800} style={styles.loading} />
   } else {
     return (
       <View style={styles.container}>
+        <Appbar style={styles.appbar}>
+          <Title style={styles.textAppbar}>FarmWork</Title>
+          <Appbar.Action icon="logout" onPress={handleLogout} style={styles.appbarItem}/>
+        </Appbar>
         <ScrollView style={styles.container}>
           <Portal>
             <Modal
@@ -148,5 +163,15 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#cb997e",
+  },
+  appbarItem: {
+    
+  },
+  appbar: {
+    justifyContent: "flex-end",
+    paddingTop: 8
+  },
+  textAppbar: {
+    color: "white"
   }
 })

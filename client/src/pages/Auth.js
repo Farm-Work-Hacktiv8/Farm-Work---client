@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import SwitchSelector from 'react-native-switch-selector'
-import { View, ScrollView, StyleSheet } from 'react-native'
+import { View, ScrollView, StyleSheet, Image } from 'react-native'
 import { Card, TextInput, Button, Snackbar } from 'react-native-paper'
 import { register, login } from '../store/action'
 import { useDispatch, useSelector } from 'react-redux'
@@ -96,6 +96,7 @@ export default function Auth(props) {
   return (
     <>
       <ScrollView style={styles.container}>
+        <Image resizeMethod="resize" source={require('../../assets/LogoFarmWork.png')} style={styles.logo} />
         <Card style={status === 'register' ? styles.cardRegister : styles.cardLogin}>
           <SwitchSelector
             style={styles.switchSelector}
@@ -174,14 +175,14 @@ const styles = StyleSheet.create({
   cardRegister: {
     flex: 1,
     minHeight: 420,
-    marginTop: "25%",
+    marginTop: -50,
     marginHorizontal: 30,
     backgroundColor: '#ffe8d6'
   },
   cardLogin: {
     flex: 1,
     minHeight: 300,
-    marginTop: "25%",
+    marginTop: -50,
     marginHorizontal: 30,
     backgroundColor: '#ffe8d6'
   },
@@ -221,5 +222,11 @@ const styles = StyleSheet.create({
   },
   snackbar: {
     backgroundColor: '#22223b',
+  },
+  logo: {
+    resizeMode: "contain",
+    width: 200,
+    marginTop: 20,
+    alignSelf: "center",
   }
 })
