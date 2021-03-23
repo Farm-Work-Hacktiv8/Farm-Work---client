@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import SwitchSelector from 'react-native-switch-selector'
 import { View, ScrollView, StyleSheet } from 'react-native'
-import { Card, TextInput, Button} from 'react-native-paper'
+import { Card, TextInput, Button, Snackbar } from 'react-native-paper'
 import { register, login } from '../store/action'
 import { useDispatch, useSelector } from 'react-redux'
 import * as SecureStore from 'expo-secure-store'
 
-export default function Auth (props) {
+export default function Auth(props) {
 
   const navigation = props.navigation
   const [status, setStatus] = useState('login')
@@ -18,7 +18,9 @@ export default function Auth (props) {
   const option = [{ label: 'Login', value: 'login' }, { label: 'Register', value: 'register' }]
   const access_token = useSelector(state => state.access_token)
   const dispatch = useDispatch()
-  
+  const [visible, setVisible] = useState(false)
+  const error = useSelector(state => state.error)
+
 
   useEffect(() => {
     if (access_token) {
@@ -27,8 +29,14 @@ export default function Auth (props) {
       checkAuth()
     }
   }, [access_token])
+  console.log(error, "<<<< eror di auth");
+  useEffect(() => {
+    if (error) {
+      setVisible(true)
+    }
+  }, [error])
 
-  async function checkAuth () {
+  async function checkAuth() {
     try {
       const storeUsername = await SecureStore.getItemAsync('username')
       const storePassword = await SecureStore.getItemAsync('password')
@@ -43,7 +51,7 @@ export default function Auth (props) {
     }
   }
 
-  function confirmRegister (e) {
+  function confirmRegister(e) {
     e.preventDefault()
     //console.log(username, firstName, lastName, email, password)
     const newUser = {
@@ -54,97 +62,113 @@ export default function Auth (props) {
       password
     }
     dispatch(register(newUser))
+    setFirstName("")
+    setLastName("")
+    setUsername("")
+    setPassword("")
+    setEmail("")
   }
 
-  async function confirmLogin () {
+  async function confirmLogin() {
     try {
       await SecureStore.setItemAsync('username', username)
       await SecureStore.setItemAsync('password', password)
       const storeUsername = await SecureStore.getItemAsync('username')
       const storePassword = await SecureStore.getItemAsync('password')
       console.log(storeUsername, storePassword, 'from store in login')
-    } catch(err) {
+    } catch (err) {
       console.log(err)
     }
     // if (username && password) {
-      dispatch(login({username, password}), navigation)
+    dispatch(login({ username, password }), navigation)
+    setFirstName("")
+    setLastName("")
+    setUsername("")
+    setPassword("")
+    setEmail("")
     // }
   }
 
-  function changePage (value) {
+  function changePage(value) {
     setStatus(value)
   }
 
   return (
-    <ScrollView style={ styles.container }>
-      <Card style={ status === 'register' ? styles.cardRegister : styles.cardLogin }>
-        <SwitchSelector 
-          style={ styles.switchSelector }
-          options={option}
-          initial={0}
-          hasPadding
-          fontSize={16}
-          textColor={'#22223b'}
-          selectedColor="white"
-          buttonColor="#22223b"
-          borderColor="#22223b"
-          onPress={value => changePage(value)}
-        />
-        <TextInput 
-          style={ styles.input }
-          label="Username"
-          mode="outlined"
-          value={username}
-          onChangeText={text => setUsername(text)}
-        />
-        { status === 'register' ? 
-          <View style={ styles.fullNameContainer }>
-            <TextInput 
-              style={ [styles.nameInput, styles.nameLeft] }
-              label="First Name"
-              mode="outlined"
-              value={firstName}
-              onChangeText={text => setFirstName(text)}
-            />
-            <TextInput 
-              style={ [styles.nameInput, styles.nameRight] }
-              label="Last Name"
-              mode="outlined"
-              value={lastName}
-              onChangeText={text => setLastName(text)}
-            />
-          </View>
-          : <View></View>
-        }
-        { status === 'register' ? 
-          <TextInput 
-            style={ styles.input }
-            label="Email"
-            mode="outlined"
-            value={email}
-            onChangeText={text => setEmail(text)}
+    <>
+      <ScrollView style={styles.container}>
+        <Card style={status === 'register' ? styles.cardRegister : styles.cardLogin}>
+          <SwitchSelector
+            style={styles.switchSelector}
+            options={option}
+            initial={0}
+            hasPadding
+            fontSize={16}
+            textColor={'#22223b'}
+            selectedColor="white"
+            buttonColor="#22223b"
+            borderColor="#22223b"
+            onPress={value => changePage(value)}
           />
-          : <View></View>
-        }
-        <TextInput 
-          style={ styles.input }
-          label="Password"
-          mode="outlined"
-          secureTextEntry={true}
-          value={password}
-          onChangeText={text => setPassword(text)}
-        />
-        { status === 'register' ? 
-          <Button mode="contained" style={ styles.btn } onPress={e => confirmRegister(e)}>Register</Button> :
-          <Button mode="contained" style={ styles.btn } onPress={confirmLogin}>Login</Button>
-        }
-      </Card>
-    </ScrollView>
+          <TextInput
+            style={styles.input}
+            label="Username"
+            mode="outlined"
+            value={username}
+            onChangeText={text => setUsername(text)}
+          />
+          {status === 'register' ?
+            <View style={styles.fullNameContainer}>
+              <TextInput
+                style={[styles.nameInput, styles.nameLeft]}
+                label="First Name"
+                mode="outlined"
+                value={firstName}
+                onChangeText={text => setFirstName(text)}
+              />
+              <TextInput
+                style={[styles.nameInput, styles.nameRight]}
+                label="Last Name"
+                mode="outlined"
+                value={lastName}
+                onChangeText={text => setLastName(text)}
+              />
+            </View>
+            : <View></View>
+          }
+          {status === 'register' ?
+            <TextInput
+              style={styles.input}
+              label="Email"
+              mode="outlined"
+              value={email}
+              onChangeText={text => setEmail(text)}
+            />
+            : <View></View>
+          }
+          <TextInput
+            style={styles.input}
+            label="Password"
+            mode="outlined"
+            secureTextEntry={true}
+            value={password}
+            onChangeText={text => setPassword(text)}
+          />
+          {status === 'register' ?
+            <Button mode="contained" style={styles.btn} onPress={e => confirmRegister(e)}>Register</Button> :
+            <Button mode="contained" style={styles.btn} onPress={confirmLogin}>Login</Button>
+          }
+        </Card>
+      </ScrollView>
+      <Snackbar visible={visible} onDismiss={() => { setVisible(false) }} style={styles.snackbar} duration={4000}>
+        {error}
+      </Snackbar>
+    </>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     backgroundColor: '#cb997e'
   },
   cardRegister: {
@@ -194,5 +218,8 @@ const styles = StyleSheet.create({
   },
   slideBtn: {
     borderRadius: 0
+  },
+  snackbar: {
+    backgroundColor: '#22223b',
   }
 })
