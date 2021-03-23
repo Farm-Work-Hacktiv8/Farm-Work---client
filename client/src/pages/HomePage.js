@@ -87,7 +87,7 @@ export default function HomePage({ navigation }) {
 
 const styles = StyleSheet.create({
   title: {
-    marginTop: 20,
+    marginTop: 50,
     textAlign: 'center',
     fontSize: 30,
     fontWeight: 'bold'

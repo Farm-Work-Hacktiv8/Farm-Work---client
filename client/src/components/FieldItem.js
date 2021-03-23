@@ -94,7 +94,7 @@ export default function FieldItem({ data }) {
             mode="outlined"
             placeholder="Estimate day for harvesting your plant"
             keyboardType="numeric"
-            value={newPlant.harvestTime}
+            value={(newPlant.harvestTime) + ''}
             onChange={(e) => { setNewPlant({ ...newPlant, harvestTime: e.target.value }) }}
           />
           <Button
@@ -159,6 +159,6 @@ const styles = StyleSheet.create({
   },
   buttonModal: {
     marginVertical: 10,
-    backgroundColor: "#b7b7a4"
+    backgroundColor: "#cb997e"
   },
 })
