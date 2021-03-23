@@ -57,12 +57,14 @@ export default function DetailFieldPage({ route, navigation }) {
           >
             <Title>Plant Detail</Title>
             <TextInput
+              style={ styles.textInput }
               label="Plant Name:"
               mode="outlined"
               placeholder="Put your plant name here"
               onChangeText={(text) => setPlantName(text)}
             />
             <TextInput
+              style={ styles.textInput }
               label="Harvest Time:"
               mode="outlined"
               placeholder="Estimate day for harvesting your plant"
@@ -124,5 +126,8 @@ const styles = StyleSheet.create({
   },
   textEmpty: {
     fontSize: 30
+  },
+  textInput: {
+    height: 45
   }
 })

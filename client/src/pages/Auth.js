@@ -76,7 +76,7 @@ export default function Auth (props) {
   }
 
   return (
-    <ScrollView>
+    <ScrollView style={ styles.container }>
       <Card style={ status === 'register' ? styles.cardRegister : styles.cardLogin }>
         <SwitchSelector 
           style={ styles.switchSelector }
@@ -84,10 +84,10 @@ export default function Auth (props) {
           initial={0}
           hasPadding
           fontSize={16}
-          textColor={'rgb(97, 0, 237)'}
+          textColor={'#22223b'}
           selectedColor="white"
-          buttonColor="rgb(97, 0, 237)"
-          borderColor="rgb(97, 0, 237)"
+          buttonColor="#22223b"
+          borderColor="#22223b"
           onPress={value => changePage(value)}
         />
         <TextInput 
@@ -144,24 +144,26 @@ export default function Auth (props) {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    backgroundColor: '#cb997e'
+  },
   cardRegister: {
     flex: 1,
     minHeight: 420,
-    marginTop: "10%",
-    marginHorizontal: 30
+    marginTop: "25%",
+    marginHorizontal: 30,
+    backgroundColor: '#ffe8d6'
   },
   cardLogin: {
     flex: 1,
     minHeight: 300,
-    marginTop: "10%",
-    marginHorizontal: 30
+    marginTop: "25%",
+    marginHorizontal: 30,
+    backgroundColor: '#ffe8d6'
   },
   switchSelector: {
     marginVertical: 25,
     marginHorizontal: 25
-  },
-  switchContainer: {
-    backgroundColor: '#DCDCDC'
   },
   fullNameContainer: {
     flexDirection: 'row',
