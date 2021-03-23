@@ -99,7 +99,7 @@ export default function FieldItem({ data }) {
             mode="outlined"
             placeholder="Put your plant name here"
             value={newPlant.plantName}
-            onChange={(e) => { setNewPlant({ ...newPlant, plantName: e.target.value }) }}
+            onChangeText={(text) => { setNewPlant({ ...newPlant, plantName: text }) }}
           />
           <TextInput
             label="Harvest Days:"
@@ -107,7 +107,7 @@ export default function FieldItem({ data }) {
             placeholder="Estimate day for harvesting your plant"
             keyboardType="numeric"
             value={(newPlant.harvestTime) + ''}
-            onChange={(e) => { setNewPlant({ ...newPlant, harvestTime: e.target.value }) }}
+            onChangeText={(text) => { setNewPlant({ ...newPlant, harvestTime: text }) }}
           />
           <Button
             onPress={handleEdit}

@@ -193,6 +193,7 @@ export function addPlants(payload, id, access_token) {
 }
 
 export function editPlants(payload, plantId, fieldId, access_token) {
+  console.log(payload, '<<< ini di edit action')
   return async (dispatch) => {
     try {
       const response = await fetch(`http://${url}:3000/plants/${fieldId}/${plantId}`, {
