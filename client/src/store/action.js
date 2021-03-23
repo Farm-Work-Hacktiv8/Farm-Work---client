@@ -1,17 +1,22 @@
+const url = "192.168.1.20" // <<<< kasih public ip (ipv4)
+
 export function getFields(access_token) {
   return async (dispatch) => {
     try {
-      const response = await fetch('http://192.168.1.15:3000/fields', {
+      dispatch(loading(true))
+      const response = await fetch(`http://${url}:3000/fields`, {
         headers: {
-          access_token : access_token.access_token,
+          access_token: access_token.access_token,
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         }
       })
       const data = await response.json()
       dispatch(setFields(data))
-    } catch ({ message }) {
-      console.log(message)
+      dispatch(loading(false))
+    } catch (error) {
+      dispatch(loading(false))
+      dispatch(error(error))
     }
   }
 }
@@ -19,10 +24,10 @@ export function getFields(access_token) {
 export function deleteField(id, access_token) {
   return async (dispatch) => {
     try {
-      const response = await fetch(`http://192.168.1.15:3000/fields/${id}`, {
+      const response = await fetch(`http://${url}:3000/fields/${id}`, {
         method: 'DELETE',
         headers: {
-          access_token : access_token.access_token,
+          access_token: access_token.access_token,
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         }
@@ -44,29 +49,34 @@ export function addField(payload, access_token) {
   console.log(payload, 'add field')
   return async (dispatch) => {
     try {
-      const response = await fetch('http://192.168.1.15:3000/fields', {
+      const response = await fetch(`http://${url}:3000/fields`, {
         method: 'POST',
         headers: {
-          access_token : access_token.access_token,
+          access_token: access_token.access_token,
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(payload)
       })
       const data = await response.json()
-      console.log(data)
-      dispatch(getFields(access_token))
+      
+      console.log(data, "<<<< error di action add")
+
+      if (data.error) {
+        dispatch(error(data.error))
+      } else {
+        dispatch(getFields(access_token))
+      }
     } catch (err) {
-      console.log(err)
+      console.log(err, "<<<< ini di catch error add")
     }
   }
 }
 
-export function editField (payload, id, access_token) {
-  console.log(access_token, '<edit action')
+export function editField(payload, id, access_token) {
   return async (dispatch) => {
     try {
-      const response = await fetch(`http://192.168.1.15:3000/fields/${id}`, {
+      const response = await fetch(`http://${url}:3000/fields/${id}`, {
         method: 'PUT',
         headers: {
           access_token: access_token.access_token,
@@ -76,7 +86,14 @@ export function editField (payload, id, access_token) {
         body: JSON.stringify(payload)
       })
       const data = await response.json()
-      dispatch(getFields(access_token))
+
+      console.log(data, "<<<< edit action")
+
+      if (data.error) {
+        dispatch(error(data.error))
+      } else {
+        dispatch(getFields(access_token))
+      }
     } catch (err) {
       console.log(err)
     }
@@ -87,7 +104,8 @@ export function getPlants(fieldsId, access_token) {
   return async (dispatch) => {
     console.log(access_token, fieldsId, 'from get plants')
     try {
-      const response = await fetch(`http://192.168.1.15:3000/plants/${fieldsId}`, {
+      dispatch(loading(true))
+      const response = await fetch(`http://${url}:3000/plants/${fieldsId}`, {
         headers: {
           access_token: access_token.access_token,
           'Accept': 'application/json',
@@ -96,8 +114,10 @@ export function getPlants(fieldsId, access_token) {
       })
       const data = await response.json()
       dispatch(setPlants(data.Plants))
-    } catch ({ message }) {
-      console.log(message)
+      dispatch(loading(false))
+    } catch (error) {
+      dispatch(loading(false))
+      dispatch(error(error))
     }
   }
 }
@@ -105,7 +125,7 @@ export function getPlants(fieldsId, access_token) {
 export function deletePlant(id, fieldId, access_token) {
   return async (dispatch) => {
     try {
-      const response = await fetch(`http://192.168.1.15:3000/plants/${fieldId}/${id}`, {
+      const response = await fetch(`http://${url}:3000/plants/${fieldId}/${id}`, {
         method: 'DELETE',
         headers: {
           access_token: access_token.access_token,
@@ -129,7 +149,7 @@ function setPlants(payload) {
 export function getIndicator(access_token) {
   return async (dispatch) => {
     try {
-      const response = await fetch(`http://192.168.1.15:3000/data`, {
+      const response = await fetch(`http://${url}:3000/data`, {
         headers: {
           access_token: access_token.access_token,
           'Accept': 'application/json',
@@ -149,18 +169,25 @@ export function addPlants(payload, id, access_token) {
   console.log(payload, 'payload', id, 'id', access_token, 'add plants')
   return async (dispatch) => {
     try {
-      const response = await fetch(`http://192.168.1.15:3000/plants/${id}`, {
+      const response = await fetch(`http://${url}:3000/plants/${id}`, {
         method: 'POST',
         headers: {
-          access_token : access_token.access_token,
+          access_token: access_token.access_token,
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(payload)
       })
-      dispatch(getPlants(id, access_token))
-    } catch ({ message }) {
-      console.log(message)
+      const data = await response.json()
+      console.log(data, "<<<< error di action add")
+
+      if (data.error) {
+        dispatch(error(data.error))
+      } else {
+        dispatch(getPlants(id, access_token))
+      }
+    } catch (error) {
+      dispatch(error(error))
     }
   }
 }
@@ -168,30 +195,39 @@ export function addPlants(payload, id, access_token) {
 export function editPlants(payload, plantId, fieldId, access_token) {
   return async (dispatch) => {
     try {
-      const response = await fetch(`http://192.168.1.15:3000/plants/${fieldId}/${plantId}`, {
+      const response = await fetch(`http://${url}:3000/plants/${fieldId}/${plantId}`, {
         method: 'PUT',
         headers: {
-          access_token : access_token.access_token,
+          access_token: access_token.access_token,
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(payload)
       })
-      dispatch(getPlants(fieldId, access_token))
-    } catch ({ message }) {
-      console.log(message)
+
+      const data = await response.json()
+
+      console.log(data, "<<<< edit action")
+
+      if (data.error) {
+        dispatch(error(data.error))
+      } else {
+        dispatch(getPlants(fieldId, access_token))
+      }
+    } catch (error) {
+      dispatch(error(error))
     }
   }
 }
 
-function setAccess_token (payload) {
-  return {type: 'TOKEN/SET_TOKEN', payload}
+export function setAccess_token(payload) {
+  return { type: 'TOKEN/SET_TOKEN', payload }
 }
 
-export function register (payload) {
+export function register(payload) {
   return async (dispatch) => {
     try {
-      const response = await fetch(`http://192.168.1.15:3000/register`, {
+      const response = await fetch(`http://${url}:3000/register`, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -200,17 +236,22 @@ export function register (payload) {
         body: JSON.stringify(payload)
       })
       const data = await response.json()
-      dispatch(login({username: data.username, password: payload.password}))
+
+      if(data.error) {
+        dispatch(error(data.error))
+      } else {
+        dispatch(login({ username: data.username, password: payload.password }))
+      }
     } catch (err) {
       console.log(err)
     }
   }
 }
 
-export function login (payload) {
+export function login(payload) {
   return async (dispatch) => {
     try {
-      const response = await fetch(`http://192.168.1.15:3000/login`, {
+      const response = await fetch(`http://${url}:3000/login`, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -219,9 +260,24 @@ export function login (payload) {
         body: JSON.stringify(payload)
       })
       const access_token = await response.json()
-      dispatch(setAccess_token(access_token))
-    } catch (err) {
-      console.log(err)
+
+      if(access_token.access_token) {
+        dispatch(setAccess_token(access_token))
+      } else {
+        dispatch(error(access_token.error))
+      }
+
+    } catch (error) {
+      dispatch(error(error.error))
+      console.log(error)
     }
   }
+}
+
+function loading(payload) {
+  return { type: 'LOADING/SETLOADING', payload }
+}
+
+export function error(payload) {
+  return { type: 'ERROR/SETERROR', payload }
 }

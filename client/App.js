@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, StatusBar } from 'react-native';
 import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
@@ -23,6 +23,8 @@ const theme = {
 
 export default function App() {
   return (
+    <>
+    <StatusBar barStyle = "dark-content" hidden = {false} backgroundColor = "white" translucent = {true}/>
     <Provider store={store}>
       <PaperProvider theme={theme}>
         <NavigationContainer>
@@ -34,6 +36,7 @@ export default function App() {
         </NavigationContainer>
       </PaperProvider>
     </Provider>
+    </>
   );
 }
 
