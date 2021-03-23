@@ -14,10 +14,9 @@ export function getFields(access_token) {
       const data = await response.json()
       dispatch(setFields(data))
       dispatch(loading(false))
-    } catch ({ message }) {
+    } catch (error) {
       dispatch(loading(false))
-      console.log(message, "<<< di action")
-      dispatch(error(message))
+      dispatch(error(error))
     }
   }
 }
@@ -60,16 +59,21 @@ export function addField(payload, access_token) {
         body: JSON.stringify(payload)
       })
       const data = await response.json()
-      console.log(data)
-      dispatch(getFields(access_token))
+      
+      console.log(data, "<<<< error di action add")
+
+      if (data.error) {
+        dispatch(error(data.error))
+      } else {
+        dispatch(getFields(access_token))
+      }
     } catch (err) {
-      console.log(err)
+      console.log(err, "<<<< ini di catch error add")
     }
   }
 }
 
 export function editField(payload, id, access_token) {
-  console.log(access_token, '<edit action')
   return async (dispatch) => {
     try {
       const response = await fetch(`http://${url}:3000/fields/${id}`, {
@@ -82,7 +86,14 @@ export function editField(payload, id, access_token) {
         body: JSON.stringify(payload)
       })
       const data = await response.json()
-      dispatch(getFields(access_token))
+
+      console.log(data, "<<<< edit action")
+
+      if (data.error) {
+        dispatch(error(data.error))
+      } else {
+        dispatch(getFields(access_token))
+      }
     } catch (err) {
       console.log(err)
     }
@@ -93,6 +104,7 @@ export function getPlants(fieldsId, access_token) {
   return async (dispatch) => {
     console.log(access_token, fieldsId, 'from get plants')
     try {
+      dispatch(loading(true))
       const response = await fetch(`http://${url}:3000/plants/${fieldsId}`, {
         headers: {
           access_token: access_token.access_token,
@@ -102,8 +114,10 @@ export function getPlants(fieldsId, access_token) {
       })
       const data = await response.json()
       dispatch(setPlants(data.Plants))
-    } catch ({ message }) {
-      console.log(message)
+      dispatch(loading(false))
+    } catch (error) {
+      dispatch(loading(false))
+      dispatch(error(error))
     }
   }
 }
@@ -164,9 +178,16 @@ export function addPlants(payload, id, access_token) {
         },
         body: JSON.stringify(payload)
       })
-      dispatch(getPlants(id, access_token))
-    } catch ({ message }) {
-      console.log(message)
+      const data = await response.json()
+      console.log(data, "<<<< error di action add")
+
+      if (data.error) {
+        dispatch(error(data.error))
+      } else {
+        dispatch(getPlants(id, access_token))
+      }
+    } catch (error) {
+      dispatch(error(error))
     }
   }
 }
@@ -183,9 +204,18 @@ export function editPlants(payload, plantId, fieldId, access_token) {
         },
         body: JSON.stringify(payload)
       })
-      dispatch(getPlants(fieldId, access_token))
-    } catch ({ message }) {
-      console.log(message)
+
+      const data = await response.json()
+
+      console.log(data, "<<<< edit action")
+
+      if (data.error) {
+        dispatch(error(data.error))
+      } else {
+        dispatch(getPlants(fieldId, access_token))
+      }
+    } catch (error) {
+      dispatch(error(error))
     }
   }
 }
@@ -206,8 +236,6 @@ export function register(payload) {
         body: JSON.stringify(payload)
       })
       const data = await response.json()
-
-      console.log(data, "<<<<< di action")
 
       if(data.error) {
         dispatch(error(data.error))

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux"
 import { View, StyleSheet, Text } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
-import { Button, Modal, Portal, TextInput, Title, ActivityIndicator, Colors, SnackBar } from 'react-native-paper'
+import { Button, Modal, Portal, TextInput, Title, ActivityIndicator, Colors, Snackbar, Appbar } from 'react-native-paper'
 import HomeItem from '../components/HomeItem'
 import { getFields, addField, error, setAccess_token } from "../store/action"
 import * as SecureStore from 'expo-secure-store'
@@ -10,13 +10,13 @@ import * as SecureStore from 'expo-secure-store'
 export default function HomePage({ navigation }) {
   const [visible, setVisible] = useState(false)
   const [fieldName, setFieldName] = useState('')
-  const [fieldArea, setFieldArea] = useState('')
+  const [fieldArea, setFieldArea] = useState("0")
   const [snackbar, setSnackbar] = useState(false)
   const dispatch = useDispatch()
   const fields = useSelector(state => state.fields)
   const access_token = useSelector(state => state.access_token)
   const loading = useSelector(state => state.loading)
-  const error = useSelector(state => state.error)
+  const errorData = useSelector(state => state.error)
 
   useEffect(() => {
     if (access_token) {
@@ -28,10 +28,10 @@ export default function HomePage({ navigation }) {
   }, [access_token, dispatch])
 
   useEffect(() => {
-    if (error) {
+    if (errorData) {
       setSnackbar(true)
     }
-  }, [error])
+  }, [errorData])
 
   function handleAdd() {
     const payload = {
@@ -71,6 +71,10 @@ export default function HomePage({ navigation }) {
   } else {
     return (
       <View style={styles.container}>
+        <Appbar style={styles.appbar}>
+          <Title style={styles.textAppbar}>FarmWork</Title>
+          <Appbar.Action icon="logout" onPress={handleLogout} style={styles.appbarItem}/>
+        </Appbar>
         <ScrollView>
           <Portal>
             <Modal
@@ -100,10 +104,8 @@ export default function HomePage({ navigation }) {
             </Modal>
           </Portal>
           {/* End of Modal */}
-          {/* end of snackbar */}
           <Title style={styles.title}>Your Field</Title>
           <Button icon="ballot" mode="contained" style={styles.buttonAdd} onPress={() => setVisible(true)}>Add</Button>
-          <Button onPress={handleLogout} mode="contained" style={styles.buttonAdd}>Logout</Button>
           {
             fields.length === 0 ?
               <View style={styles.containerEmpty}>
@@ -115,6 +117,10 @@ export default function HomePage({ navigation }) {
               })
           }
         </ScrollView>
+        {/* End of scroll view */}
+        <Snackbar visible={snackbar} onDismiss={handleSnackbar} style={styles.snackbar} duration={4000}>
+        {errorData}
+      </Snackbar>
       </View>
     )
   }
@@ -164,5 +170,19 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#cb997e",
+  },
+  snackbar: {
+    backgroundColor: '#22223b',
+  },
+  appbarItem: {
+    
+  },
+  appbar: {
+    flex: 1,
+    justifyContent: "flex-end",
+    paddingTop: 8
+  },
+  textAppbar: {
+    color: "white"
   }
 })

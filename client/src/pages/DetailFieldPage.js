@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import { useDispatch, useSelector } from "react-redux"
 import { ScrollView } from 'react-native-gesture-handler'
-import { Button, Title, Modal, Portal, TextInput, ActivityIndicator, Colors } from 'react-native-paper'
+import { Button, Title, Modal, Portal, TextInput, ActivityIndicator, Colors, Snackbar } from 'react-native-paper'
 import FieldItem from '../components/FieldItem'
-import { getPlants, addPlants } from "../store/action"
+import { getPlants, addPlants, error } from "../store/action"
 
 export default function DetailFieldPage({ route, navigation }) {
   const dispatch = useDispatch()
@@ -14,13 +14,10 @@ export default function DetailFieldPage({ route, navigation }) {
   const plants = useSelector(state => state.plants)
   const access_token = useSelector(state => state.access_token)
   const loading = useSelector(state => state.loading)
+  const errorData = useSelector(state => state.error)
   const [plantName, setPlantName] = useState('')
   const [harvestTime, setHarvestTime] = useState('')
-  const [newPlant, setNewPlant] = useState({
-    plantName: "",
-    harvestTime: "",
-    fieldsId
-  })
+  const [snackbar, setSnackbar] = useState(false)
 
   useEffect(() => {
     if (access_token) {
@@ -29,6 +26,12 @@ export default function DetailFieldPage({ route, navigation }) {
       console.log("No access token")
     }
   }, [access_token, dispatch])
+
+  useEffect(() => {
+    if (errorData) {
+      setSnackbar(true)
+    }
+  }, [errorData])
 
   const showModal = () => { setVisible(true) }
   const hideModal = () => { setVisible(false) }
@@ -42,6 +45,11 @@ export default function DetailFieldPage({ route, navigation }) {
     console.log(payload, 'from pages')
     dispatch(addPlants(payload, fieldsId, access_token))
     setVisible(false)
+  }
+
+  function handleSnackbar() {
+    dispatch(error(""))
+    setSnackbar(false)
   }
 
   if (loading) {
@@ -95,6 +103,9 @@ export default function DetailFieldPage({ route, navigation }) {
               })
           }
         </ScrollView>
+        <Snackbar visible={snackbar} onDismiss={handleSnackbar} style={styles.snackbar} duration={4000}>
+          {errorData}
+        </Snackbar>
       </View>
     )
   }
@@ -131,5 +142,11 @@ const styles = StyleSheet.create({
   },
   textInput: {
     height: 45
+  },
+  loading: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#cb997e",
   }
 })
