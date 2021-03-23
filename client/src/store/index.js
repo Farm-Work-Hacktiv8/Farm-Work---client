@@ -7,7 +7,8 @@ const initialState = {
   indicator: {},
   access_token: '',
   loading: false,
-  error: ''
+  error: '',
+  history: []
 }
 
 function plantsReducer(state = initialState, actions) {
@@ -25,6 +26,8 @@ function plantsReducer(state = initialState, actions) {
       return { ...state, loading: payload }
     case "ERROR/SETERROR":
       return { ...state, error: payload }
+    case "HISTORY/SET_HISTORY":
+      return {...state, history: payload}
     default:
       return state
   }

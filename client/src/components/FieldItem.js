@@ -2,7 +2,8 @@ import React, { useState } from 'react'
 import { View, StyleSheet } from 'react-native'
 import { Card, Button, Title, Portal, Dialog, Paragraph, Modal, Divider, Text, TextInput, List } from 'react-native-paper'
 import { useDispatch, useSelector } from 'react-redux'
-import { deletePlant, getIndicator, editPlants } from '../store/action'
+import { deletePlant, getHistory, editPlants } from '../store/action'
+
 
 export default function FieldItem({ data }) {
   const dispatch = useDispatch()
@@ -18,14 +19,15 @@ export default function FieldItem({ data }) {
   })
   const hideModal = () => { setModalVisible(false) }
   const hideEdit = () => { setEditModal(false) }
-
+  const history = useSelector(state => state.history)
+  
   function handleDelete() {
     setVisible(false)
     dispatch(deletePlant(data.id, data.PlantFields.fieldId, access_token))
   }
 
   function handleDetail() {
-    dispatch(getIndicator(access_token))
+    dispatch(getHistory(access_token))
     setModalVisible(true)
   }
 
@@ -68,26 +70,17 @@ export default function FieldItem({ data }) {
               <Title style={styles.modalTitle}>History</Title>
               <Divider style={styles.modalDivider} />
               <List.Accordion title="List details history">
-                <List.Item
-                  title="First Item"
-                  description="Item description"
-                />
-                <List.Item
-                  title="First Item"
-                  description="Item description"
-                />
-                <List.Item
-                  title="First Item"
-                  description="Item description"
-                />
-                <List.Item
-                  title="First Item"
-                  description="Item description"
-                />
-                <List.Item
-                  title="First Item"
-                  description="Item description"
-                />
+                {
+                  history.length === 0 ? <Text>History Empty</Text> :
+                  history.map((el, i) => {
+                  return  <List.Item
+                        title={el}
+                        description="Pump Watering"
+                        key={i}
+                      />
+                  }) 
+                }
+                
               </List.Accordion>
             </Card.Content>
           </Card>
@@ -127,7 +120,7 @@ export default function FieldItem({ data }) {
       </Portal>
       {/* Start of component */}
       <Card style={[styles.card]} onPress={handleDetail}>
-        <Card.Cover source={{ uri: "https://images.unsplash.com/photo-1492944557828-11e576351057?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" }} />
+        <Card.Cover source={{ uri: "https://images.unsplash.com/photo-1516253593875-bd7ba052fbc5?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" }} />
         <Card.Content>
           <Title>{data.plantName}</Title>
         </Card.Content>
@@ -136,7 +129,7 @@ export default function FieldItem({ data }) {
           <Text>Air Humidity: {indicator.humidity}</Text>
           <Text>Ground Humidity: {indicator.moisture}</Text>
           <Text>Harvest days: {data.harvestTime} days</Text>
-          <Text>Last watering: template</Text>
+          <Text>Last watering: {indicator.pump}</Text>
         </Card.Content>
         <Card.Actions>
           <Button icon="arrow-right-bold-box" onPress={handleDetail}>History</Button>

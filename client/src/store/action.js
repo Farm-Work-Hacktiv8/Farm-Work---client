@@ -1,4 +1,4 @@
-const url = "192.168.1.20" // <<<< kasih public ip (ipv4)
+const url = "192.168.100.14" // <<<< kasih public ip (ipv4)
 
 export function getFields(access_token) {
   return async (dispatch) => {
@@ -280,4 +280,26 @@ function loading(payload) {
 
 export function error(payload) {
   return { type: 'ERROR/SETERROR', payload }
+}
+
+function setHistory (payload){
+  return { type: 'HISTORY/SET_HISTORY', payload}
+}
+
+export function getHistory (access_token) {
+  return async (dispatch) => {
+    try {
+      const history = await fetch(`http://${url}:3000/history`, {
+        headers: {
+          access_token: access_token.access_token,
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+      const result = await history.json()
+      dispatch(setHistory(result))
+    } catch (err) {
+      console.log(err)
+    }
+  }
 }
