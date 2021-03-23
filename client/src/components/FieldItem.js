@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { View, StyleSheet } from 'react-native'
-import { Card, Button, Title, Portal, Dialog, Paragraph, Modal, Divider, Text, TextInput } from 'react-native-paper'
+import { Card, Button, Title, Portal, Dialog, Paragraph, Modal, Divider, Text, TextInput, List } from 'react-native-paper'
 import { useDispatch, useSelector } from 'react-redux'
 import { deletePlant, getIndicator, editPlants } from '../store/action'
 
@@ -10,6 +10,7 @@ export default function FieldItem({ data }) {
   const [modalVisible, setModalVisible] = useState(false)
   const [editModal, setEditModal] = useState(false)
   const access_token = useSelector(state => state.access_token)
+  const indicator = useSelector(state => state.indicator)
   const [newPlant, setNewPlant] = useState({
     plantName: data.plantName,
     harvestTime: data.harvestTime,
@@ -64,12 +65,30 @@ export default function FieldItem({ data }) {
         >
           <Card>
             <Card.Content>
-              <Title style={styles.modalTitle}>{data.plantName}</Title>
+              <Title style={styles.modalTitle}>History</Title>
               <Divider style={styles.modalDivider} />
-              <Text>Temperature: 30&#8451;</Text>
-              <Text>Air Humidity: 29&#8451;</Text>
-              <Text>Ground Humidity: 28&#8451;</Text>
-              <Text>Harvest Time: {data.harvestTime} days remaining</Text>
+              <List.Accordion title="List details history">
+                <List.Item
+                  title="First Item"
+                  description="Item description"
+                />
+                <List.Item
+                  title="First Item"
+                  description="Item description"
+                />
+                <List.Item
+                  title="First Item"
+                  description="Item description"
+                />
+                <List.Item
+                  title="First Item"
+                  description="Item description"
+                />
+                <List.Item
+                  title="First Item"
+                  description="Item description"
+                />
+              </List.Accordion>
             </Card.Content>
           </Card>
         </Modal>
@@ -90,7 +109,7 @@ export default function FieldItem({ data }) {
             onChange={(e) => { setNewPlant({ ...newPlant, plantName: e.target.value }) }}
           />
           <TextInput
-            label="Harvest Time:"
+            label="Harvest Days:"
             mode="outlined"
             placeholder="Estimate day for harvesting your plant"
             keyboardType="numeric"
@@ -107,13 +126,20 @@ export default function FieldItem({ data }) {
         </Modal>
       </Portal>
       {/* Start of component */}
-      <Card style={[styles.card]}>
+      <Card style={[styles.card]} onPress={handleDetail}>
         <Card.Cover source={{ uri: "https://images.unsplash.com/photo-1492944557828-11e576351057?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" }} />
         <Card.Content>
           <Title>{data.plantName}</Title>
         </Card.Content>
+        <Card.Content>
+          <Text>Temperature: {indicator.temperature}</Text>
+          <Text>Air Humidity: {indicator.humidity}</Text>
+          <Text>Ground Humidity: {indicator.moisture}</Text>
+          <Text>Harvest days: {data.harvestTime} days</Text>
+          <Text>Last watering: template</Text>
+        </Card.Content>
         <Card.Actions>
-          <Button icon="arrow-right-bold-box" onPress={handleDetail}>Details</Button>
+          <Button icon="arrow-right-bold-box" onPress={handleDetail}>History</Button>
           <Button icon="pencil-box" onPress={openEditModal}>Edit</Button>
           <Button icon="trash-can" onPress={() => setVisible(true)}>Delete</Button>
         </Card.Actions>

@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, Text } from 'react-native'
 import { Card, Button, Title, Portal, Dialog, Paragraph, Modal, TextInput } from 'react-native-paper'
-import { deleteField, editField } from '../store/action'
+import { deleteField, editField, getIndicator } from '../store/action'
 
 export default function HomeItem({ navigation, data }) {
 
@@ -31,6 +31,11 @@ export default function HomeItem({ navigation, data }) {
     setFieldArea('')
     setFieldName('')
     setEditVisible(false)
+  }
+
+  function handleDetailPlant() {
+    navigation.navigate('DetailFieldPage', { fieldsId: data.id })
+    dispatch(getIndicator(access_token))
   }
 
   return (
@@ -72,15 +77,16 @@ export default function HomeItem({ navigation, data }) {
           <Button onPress={handleEdit} style={styles.buttonModal} mode="outlined">Submit</Button>
         </Modal>
       </Portal>
-      <Card style={[styles.card]}>
+      <Card style={[styles.card]} onPress={handleDetailPlant}>
         <Card.Cover
           source={{ uri: "https://img.freepik.com/free-vector/colorful-farm-landscape-cartoon-style_52683-16677.jpg?size=626&ext=jpg" }}
         />
         <Card.Content>
           <Title>{data.fieldName}</Title>
+          <Text>Field: {data.fieldArea} hectare</Text>
         </Card.Content>
         <Card.Actions>
-          <Button icon="arrow-right-bold-box" onPress={() => { navigation.navigate('DetailFieldPage', { fieldsId: data.id }) }} >Details</Button>
+          <Button icon="arrow-right-bold-box" onPress={handleDetailPlant} >Details</Button>
           <Button icon="pencil-box"onPress={() => setEditVisible(true)}>Edit</Button>
           <Button icon="trash-can" onPress={() => setVisible(true)}>Delete</Button>
         </Card.Actions>
