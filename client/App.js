@@ -8,6 +8,7 @@ import store from "./src/store/index"
 import Auth from './src/pages/Auth'
 import HomePage from './src/pages/HomePage'
 import DetailFieldPage from "./src/pages/DetailFieldPage"
+import LandingPage from "./src/pages/LandingPage"
 
 const Stack = createStackNavigator()
 
@@ -28,7 +29,8 @@ export default function App() {
     <Provider store={store}>
       <PaperProvider theme={theme}>
         <NavigationContainer>
-          <Stack.Navigator initialRouteName="Auth" screenOptions={{ headerShown: false }} >
+          <Stack.Navigator initialRouteName="LandingPage" screenOptions={{ headerShown: false }} >
+            <Stack.Screen name="LandingPage" component={LandingPage} />
             <Stack.Screen name="Auth" component={Auth} />
             <Stack.Screen name="HomePage" component={HomePage} />
             <Stack.Screen name="DetailFieldPage" component={DetailFieldPage} />
