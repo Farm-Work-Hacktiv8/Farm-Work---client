@@ -12,22 +12,25 @@ export default function LandingPage({ navigation }) {
     navigation.navigate('Auth')
   }
 
-  return (
-    <View style={styles.container}>
-      <ImageBackground source={image} style={styles.image} imageStyle={styles.background}>
-        <View styles={styles.containerText}>
-          <Headline style={styles.header}>FarmWork App</Headline>
-          <Title style={styles.motto}>Our Motto</Title>
-          <Paragraph style={styles.paragraph}>to help some of harvest technology to improve efficiency, better manage and optimize field activities.</Paragraph>
-          <View style={styles.containerBtn}>
-            <Button color="white" style={styles.button} mode="outlined" onPress={handleNext}>Start Now</Button>
+  if (!fontKalam) {
+    return <Text>Loading...</Text>
+  } else {
+    return (
+      <View style={styles.container}>
+        <ImageBackground source={image} style={styles.image} imageStyle={styles.background}>
+          <View styles={styles.containerText}>
+            <Headline style={styles.header}>FarmWork App</Headline>
+            <Title style={styles.motto}>Our Motto</Title>
+            <Paragraph style={styles.paragraph}>to help some of harvest technology to improve efficiency, better manage and optimize field activities.</Paragraph>
+            <View style={styles.containerBtn}>
+              <Button color="white" style={styles.button} mode="outlined" onPress={handleNext}>Start Now</Button>
+            </View>
           </View>
-        </View>
-      </ImageBackground>
-    </View>
-  )
+        </ImageBackground>
+      </View>
+    )
+  }
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,

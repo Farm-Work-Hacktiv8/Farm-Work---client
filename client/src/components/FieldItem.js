@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { deletePlant, getHistory, editPlants } from '../store/action'
 import Tooltip from 'react-native-walkthrough-tooltip'
 import { Kalam_700Bold } from '@expo-google-fonts/kalam'
-import {useFonts, Inter_900Black} from '@expo-google-fonts/inter'
+import { useFonts, Inter_900Black } from '@expo-google-fonts/inter'
 
 export default function FieldItem({ data }) {
   const dispatch = useDispatch()
@@ -28,8 +28,8 @@ export default function FieldItem({ data }) {
   const hideEdit = () => { setEditModal(false) }
   const history = useSelector(state => state.history)
   const [fontLoaded] = useFonts({ Inter_900Black })
-  const [fontKalam] = useFonts ({Kalam_700Bold})
-  
+  const [fontKalam] = useFonts({ Kalam_700Bold })
+
   function handleDelete() {
     setVisible(false)
     dispatch(deletePlant(data.id, data.PlantFields.fieldId, access_token))
@@ -81,15 +81,15 @@ export default function FieldItem({ data }) {
               <List.Accordion title="List details history">
                 {
                   history.length === 0 ? <Text>History Empty</Text> :
-                  history.map((el, i) => {
-                  return  <List.Item
+                    history.map((el, i) => {
+                      return <List.Item
                         title={el}
                         description="Pump Watering"
                         key={i}
                       />
-                  }) 
+                    })
                 }
-                
+
               </List.Accordion>
             </Card.Content>
           </Card>
@@ -129,16 +129,16 @@ export default function FieldItem({ data }) {
       </Portal>
       {/* Start of component */}
       <Card style={[styles.card]} onPress={handleDetail}>
-        <Card.Cover style={ styles.cardCover } source={{ uri: "https://images.unsplash.com/photo-1516253593875-bd7ba052fbc5?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" }} />
+        <Card.Cover style={styles.cardCover} source={{ uri: "https://images.unsplash.com/photo-1516253593875-bd7ba052fbc5?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" }} />
         <Card.Content>
           {
             !fontKalam ? <Text>Loading</Text> :
-            <Headline style={{fontFamily: 'Kalam_700Bold', marginTop: 10 }}>{data.plantName}</Headline>
+              <Headline style={{ fontFamily: 'Kalam_700Bold', marginTop: 10 }}>{data.plantName}</Headline>
           }
         </Card.Content>
-        <Card.Actions style={ styles.detailContainer }>
+        <Card.Actions style={styles.detailContainer}>
           <Tooltip isVisible={tempTip} content={<Text>Temperature</Text>} onClose={() => setTempTip(false)} placement="top" topAdjustment={-24} childContentSpacing={-8}>
-            <Button labelStyle={{ fontSize: 20 }} onPress={() => setTempTip(true)} icon="thermometer">35 {indicator.temperature}</Button> 
+            <Button labelStyle={{ fontSize: 20 }} onPress={() => setTempTip(true)} icon="thermometer">35 {indicator.temperature}</Button>
           </Tooltip>
           <Tooltip isVisible={airTip} content={<Text>Air Humidity</Text>} onClose={() => setAirTip(false)} placement="top" topAdjustment={-24} childContentSpacing={-8}>
             <Button labelStyle={{ fontSize: 20 }} onPress={() => setAirTip(true)} icon="water-percent">35 {indicator.humidity}</Button>
@@ -147,12 +147,12 @@ export default function FieldItem({ data }) {
             <Button labelStyle={{ fontSize: 20 }} onPress={() => setGroundTip(true)} icon="percent">35 {indicator.moisture}</Button>
           </Tooltip>
         </Card.Actions>
-        <Card.Content style={ styles.contentContainer }>
-          <Tooltip style={ styles.toolTip } isVisible={harvestTip} content={<Text>Harvest Interval</Text>} onClose={() => setHarvestTip(false)} placement="top" topAdjustment={-24} showChildInTooltip={false} >
-            <Chip mode="outlined" icon="clock-outline" onPress={() => setHarvestTip(true)}>{data.harvestTime} days</Chip>
+        <Card.Content style={styles.contentContainer}>
+          <Tooltip style={styles.toolTip} isVisible={harvestTip} content={<Text>Harvest Interval</Text>} onClose={() => setHarvestTip(false)} placement="top" topAdjustment={-24} showChildInTooltip={false} >
+            <Chip mode="outlined" icon="corn" onPress={() => setHarvestTip(true)}>every {data.harvestTime} days</Chip>
           </Tooltip>
-          <Tooltip style={ styles.toolTip } isVisible={pumpTip} content={<Text>Last Watering</Text>} onClose={() => setPumpTip(false)} placement="top" topAdjustment={-24} showChildInTooltip={false} >
-            <Chip mode="outlined" icon="water-pump" onPress={() => setPumpTip(true)}>{indicator.pump}</Chip>
+          <Tooltip style={styles.toolTip} isVisible={pumpTip} content={<Text>Last Watering</Text>} onClose={() => setPumpTip(false)} placement="top" topAdjustment={-24} showChildInTooltip={false} >
+            <Chip style={{ marginTop: 5 }} mode="outlined" icon="water-pump" onPress={() => setPumpTip(true)}>{indicator.pump}</Chip>
           </Tooltip>
         </Card.Content>
         <Card.Actions>
