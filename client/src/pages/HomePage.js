@@ -2,21 +2,27 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux"
 import { View, StyleSheet, Text } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
-import { Button, Modal, Portal, TextInput, Title, ActivityIndicator, Colors, Snackbar, Appbar } from 'react-native-paper'
+import { Button, Modal, Portal, TextInput, Title, ActivityIndicator, Colors, Snackbar, Appbar, Headline } from 'react-native-paper'
 import HomeItem from '../components/HomeItem'
 import { getFields, addField, error, setAccess_token } from "../store/action"
 import * as SecureStore from 'expo-secure-store'
+import { useFonts, Inter_900Black } from '@expo-google-fonts/inter';
+
 
 export default function HomePage({ navigation }) {
   const [visible, setVisible] = useState(false)
   const [fieldName, setFieldName] = useState('')
-  const [fieldArea, setFieldArea] = useState("0")
+  const [fieldArea, setFieldArea] = useState('')
   const [snackbar, setSnackbar] = useState(false)
   const dispatch = useDispatch()
   const fields = useSelector(state => state.fields)
   const access_token = useSelector(state => state.access_token)
   const loading = useSelector(state => state.loading)
   const errorData = useSelector(state => state.error)
+
+  let [fontsLoaded] = useFonts({
+    Inter_900Black,
+  });
 
   useEffect(() => {
     if (access_token) {
@@ -34,6 +40,9 @@ export default function HomePage({ navigation }) {
   }, [errorData])
 
   function handleAdd() {
+    if (fieldArea === "") {
+      setFieldArea("0")
+    }
     const payload = {
       fieldName,
       fieldArea
@@ -72,8 +81,8 @@ export default function HomePage({ navigation }) {
     return (
       <View style={styles.container}>
         <Appbar style={styles.appbar}>
-          <Title style={styles.textAppbar}>FarmWork</Title>
-          <Appbar.Action icon="logout" onPress={handleLogout} style={styles.appbarItem}/>
+          <Appbar.Content title="FarmWork" subtitle="Your Fields" style={styles.textAppbar} />
+          <Appbar.Action icon="logout" onPress={handleLogout} />
         </Appbar>
         <ScrollView>
           <Portal>
@@ -82,7 +91,7 @@ export default function HomePage({ navigation }) {
               onDismiss={() => setVisible(false)}
               contentContainerStyle={styles.modal}
             >
-              <Title>Add Field</Title>
+              <Headline>Add Field</Headline>
               <TextInput
                 style={styles.textInput}
                 label="Field Name"
@@ -104,8 +113,7 @@ export default function HomePage({ navigation }) {
             </Modal>
           </Portal>
           {/* End of Modal */}
-          <Title style={styles.title}>Your Field</Title>
-          <Button icon="ballot" mode="contained" style={styles.buttonAdd} onPress={() => setVisible(true)}>Add</Button>
+          <Button compact={true} icon="ballot" mode="contained" style={styles.buttonAdd} onPress={() => setVisible(true)}>Add</Button>
           {
             fields.length === 0 ?
               <View style={styles.containerEmpty}>
@@ -119,35 +127,38 @@ export default function HomePage({ navigation }) {
         </ScrollView>
         {/* End of scroll view */}
         <Snackbar visible={snackbar} onDismiss={handleSnackbar} style={styles.snackbar} duration={4000}>
-        {errorData}
-      </Snackbar>
+          {errorData}
+        </Snackbar>
       </View>
     )
   }
 }
 
-
 const styles = StyleSheet.create({
   title: {
-    marginTop: 50,
+    marginTop: 20,
     textAlign: 'center',
     fontSize: 30,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    fontFamily: "Inter_900Black"
   },
   buttonAdd: {
-    width: "40%",
+    width: "30%",
     marginVertical: 20,
-    marginHorizontal: 110
+    marginHorizontal: 120,
+    borderRadius: 10
   },
   modal: {
     backgroundColor: '#ffe8d6',
     padding: 20,
     maxWidth: "95%",
-    marginHorizontal: 20
+    marginHorizontal: 20,
+    borderRadius: 20
   },
   buttonModal: {
     marginVertical: 10,
-    backgroundColor: "#cb997e"
+    backgroundColor: "#cb997e",
+    borderRadius: 10
   },
   container: {
     flex: 1,
@@ -157,10 +168,10 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    height: "100%",
   },
   textEmpty: {
-    fontSize: 30
+    fontSize: 30,
+    fontWeight: "bold",
   },
   textInput: {
     height: 45
@@ -174,15 +185,15 @@ const styles = StyleSheet.create({
   snackbar: {
     backgroundColor: '#22223b',
   },
-  appbarItem: {
-    
-  },
   appbar: {
-    flex: 1,
     justifyContent: "flex-end",
-    paddingTop: 8
+    height: 90,
+    paddingTop: 10,
   },
   textAppbar: {
     color: "white"
+  },
+  chip: {
+    elevation: 4
   }
 })

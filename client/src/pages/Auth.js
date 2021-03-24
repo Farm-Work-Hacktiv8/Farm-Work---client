@@ -95,7 +95,7 @@ export default function Auth(props) {
 
   function handleSnackbar() {
     dispatch(error(""))
-    setSnackbar(false)
+    setVisible(false)
   }
 
   return (
