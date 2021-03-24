@@ -269,9 +269,9 @@ export function login(payload) {
       }
 
     } catch (error) {
-      if (error.error) {
+       if (error.error) {
         dispatch(error(error.error))
-      }
+       }
       console.log(error)
     }
   }

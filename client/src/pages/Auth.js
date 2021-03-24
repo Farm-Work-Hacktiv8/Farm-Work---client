@@ -168,7 +168,7 @@ export default function Auth(props) {
         </Card>
       </ScrollView>
       <Snackbar visible={visible} onDismiss={handleSnackbar} style={styles.snackbar} duration={4000}>
-        { errorData }
+        {errorData}
       </Snackbar>
     </>
   )
