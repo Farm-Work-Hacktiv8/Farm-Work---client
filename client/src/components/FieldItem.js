@@ -22,6 +22,8 @@ export default function FieldItem({ data }) {
   const [tempTip, setTempTip] = useState(false)
   const [airTip, setAirTip] = useState(false)
   const [groundTip, setGroundTip] = useState(false)
+  const [harvestTip, setHarvestTip] = useState(false)
+  const [pumpTip, setPumpTip] = useState(false)
   const hideModal = () => { setModalVisible(false) }
   const hideEdit = () => { setEditModal(false) }
   const history = useSelector(state => state.history)
@@ -109,9 +111,9 @@ export default function FieldItem({ data }) {
             onChangeText={(text) => { setNewPlant({ ...newPlant, plantName: text }) }}
           />
           <TextInput
-            label="Harvest Days:"
+            label="Harvest Interval"
             mode="outlined"
-            placeholder="Estimate day for harvesting your plant"
+            placeholder="Estimate interval in days"
             keyboardType="numeric"
             value={(newPlant.harvestTime) + ''}
             onChangeText={(text) => { setNewPlant({ ...newPlant, harvestTime: text }) }}
@@ -136,7 +138,7 @@ export default function FieldItem({ data }) {
         </Card.Content>
         <Card.Actions style={ styles.detailContainer }>
           <Tooltip isVisible={tempTip} content={<Text>Temperature</Text>} onClose={() => setTempTip(false)} placement="top" topAdjustment={-24} childContentSpacing={-8}>
-            <Button labelStyle={{ fontSize: 20 }} onPress={() => setTempTip(true)} icon="thermometer">35 {indicator.humidity}</Button> 
+            <Button labelStyle={{ fontSize: 20 }} onPress={() => setTempTip(true)} icon="thermometer">35 {indicator.temperature}</Button> 
           </Tooltip>
           <Tooltip isVisible={airTip} content={<Text>Air Humidity</Text>} onClose={() => setAirTip(false)} placement="top" topAdjustment={-24} childContentSpacing={-8}>
             <Button labelStyle={{ fontSize: 20 }} onPress={() => setAirTip(true)} icon="water-percent">35 {indicator.humidity}</Button>
@@ -145,9 +147,13 @@ export default function FieldItem({ data }) {
             <Button labelStyle={{ fontSize: 20 }} onPress={() => setGroundTip(true)} icon="percent">35 {indicator.moisture}</Button>
           </Tooltip>
         </Card.Actions>
-        <Card.Content>
-          <Text>Harvest days: {data.harvestTime} days</Text>
-          <Text>Last watering: {indicator.pump}</Text>
+        <Card.Content style={ styles.contentContainer }>
+          <Tooltip style={ styles.toolTip } isVisible={harvestTip} content={<Text>Harvest Interval</Text>} onClose={() => setHarvestTip(false)} placement="top" topAdjustment={-24} showChildInTooltip={false} >
+            <Chip mode="outlined" icon="clock-outline" onPress={() => setHarvestTip(true)}>{data.harvestTime} days</Chip>
+          </Tooltip>
+          <Tooltip style={ styles.toolTip } isVisible={pumpTip} content={<Text>Last Watering</Text>} onClose={() => setPumpTip(false)} placement="top" topAdjustment={-24} showChildInTooltip={false} >
+            <Chip mode="outlined" icon="water-pump" onPress={() => setPumpTip(true)}>{indicator.pump}</Chip>
+          </Tooltip>
         </Card.Content>
         <Card.Actions>
           <Button icon="arrow-right-bold-box" onPress={handleDetail}>History</Button>
@@ -207,4 +213,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     height: 25
   },
+  contentContainer: {
+    marginTop: 10,
+  },
+  toolTip: {
+    left: 15
+  }
 })
