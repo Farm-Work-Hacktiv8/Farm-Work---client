@@ -1,4 +1,4 @@
-const url = "192.168.100.14" // <<<< kasih public ip (ipv4)
+const url = "192.168.1.9" // <<<< kasih public ip (ipv4)
 
 export function getFields(access_token) {
   return async (dispatch) => {

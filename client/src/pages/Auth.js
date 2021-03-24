@@ -29,7 +29,7 @@ export default function Auth(props) {
       checkAuth()
     }
   }, [access_token])
-  console.log(error, "<<<< eror di auth");
+  console.log(errorData, "<<<< eror di auth");
   useEffect(() => {
     if (errorData) {
       setVisible(true)
@@ -45,6 +45,8 @@ export default function Auth(props) {
         setUsername(storeUsername)
         setPassword(storePassword)
         confirmLogin()
+      } else {
+        console.log('cancel login from secureStore')
       }
     } catch (err) {
       console.log(err)
