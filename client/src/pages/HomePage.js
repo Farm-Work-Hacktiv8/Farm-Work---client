@@ -146,7 +146,8 @@ const styles = StyleSheet.create({
     width: "30%",
     marginVertical: 20,
     marginHorizontal: 140,
-    borderRadius: 10
+    borderRadius: 10,
+    alignSelf: 'center'
   },
   modal: {
     backgroundColor: '#ffe8d6',
@@ -172,6 +173,7 @@ const styles = StyleSheet.create({
   textEmpty: {
     fontSize: 30,
     fontWeight: "bold",
+    textAlign: "center"
   },
   textInput: {
     height: 45

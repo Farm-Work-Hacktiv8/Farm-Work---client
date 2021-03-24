@@ -69,8 +69,8 @@ export default function DetailFieldPage({ route, navigation }) {
     return (
       <View style={styles.container}>
         <Appbar style={styles.appbar}>
-          <Title style={styles.textAppbar}>FarmWork</Title>
-          <Appbar.Action icon="logout" onPress={handleLogout} style={styles.appbarItem}/>
+          <Appbar.Content title="FarmWork" subtitle="Your Plants" style={styles.textAppbar} />
+          <Appbar.Action icon="logout" onPress={handleLogout} />
         </Appbar>
         <ScrollView style={styles.container}>
           <Portal>
@@ -82,16 +82,16 @@ export default function DetailFieldPage({ route, navigation }) {
               <Title>Plant Detail</Title>
               <TextInput
                 style={styles.textInput}
-                label="Plant Name:"
+                label="Plant Name"
                 mode="outlined"
                 placeholder="Put your plant name here"
                 onChangeText={(text) => setPlantName(text)}
               />
               <TextInput
                 style={styles.textInput}
-                label="Harvest Time:"
+                label="Harvest Interval"
                 mode="outlined"
-                placeholder="Estimate day for harvesting your plant"
+                placeholder="Estimate interval in days"
                 keyboardType="numeric"
                 onChangeText={(text) => setHarvestTime(text)}
               />
@@ -105,7 +105,6 @@ export default function DetailFieldPage({ route, navigation }) {
             </Modal>
           </Portal>
           {/* Start of page */}
-          <Title style={styles.title}>Your Plant</Title>
           <Button icon="ballot" mode="contained" style={styles.button} onPress={showModal}>Add Plant</Button>
           {
             plants.length === 0 ?
@@ -136,24 +135,29 @@ const styles = StyleSheet.create({
   button: {
     width: "40%",
     marginVertical: 20,
-    marginHorizontal: 110
+    marginHorizontal: 110,
+    alignSelf: 'center'
   },
   modal: {
     backgroundColor: '#ffe8d6',
     padding: 20,
     maxWidth: "95%",
-    marginHorizontal: 20
+    marginHorizontal: 20,
+    borderRadius: 20
   },
   buttonModal: {
     marginVertical: 10,
-    backgroundColor: "#cb997e"
+    backgroundColor: "#cb997e",
+    borderRadius: 10
   },
   container: {
     flex: 1,
     backgroundColor: "#cb997e",
   },
   textEmpty: {
-    fontSize: 30
+    fontSize: 30,
+    fontWeight: "bold",
+    textAlign: "center"
   },
   textInput: {
     height: 45
@@ -164,12 +168,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#cb997e",
   },
-  appbarItem: {
-    
-  },
   appbar: {
     justifyContent: "flex-end",
-    paddingTop: 8
+    height: 90,
+    paddingTop: 10,
   },
   textAppbar: {
     color: "white"
