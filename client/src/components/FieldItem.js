@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 import { View, StyleSheet } from 'react-native'
-import { Card, Button, Title, Portal, Dialog, Paragraph, Modal, Divider, Text, TextInput, List } from 'react-native-paper'
+import { Card, Button, Title, Portal, Dialog, Paragraph, Modal, Divider, Text, TextInput, List, Headline, Chip } from 'react-native-paper'
 import { useDispatch, useSelector } from 'react-redux'
 import { deletePlant, getHistory, editPlants } from '../store/action'
 import Tooltip from 'react-native-walkthrough-tooltip'
-
+import { Kalam_700Bold } from '@expo-google-fonts/kalam'
+import {useFonts, Inter_900Black} from '@expo-google-fonts/inter'
 
 export default function FieldItem({ data }) {
   const dispatch = useDispatch()
@@ -24,6 +25,8 @@ export default function FieldItem({ data }) {
   const hideModal = () => { setModalVisible(false) }
   const hideEdit = () => { setEditModal(false) }
   const history = useSelector(state => state.history)
+  const [fontLoaded] = useFonts({ Inter_900Black })
+  const [fontKalam] = useFonts ({Kalam_700Bold})
   
   function handleDelete() {
     setVisible(false)
@@ -124,19 +127,22 @@ export default function FieldItem({ data }) {
       </Portal>
       {/* Start of component */}
       <Card style={[styles.card]} onPress={handleDetail}>
-        <Card.Cover source={{ uri: "https://images.unsplash.com/photo-1516253593875-bd7ba052fbc5?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" }} />
+        <Card.Cover style={ styles.cardCover } source={{ uri: "https://images.unsplash.com/photo-1516253593875-bd7ba052fbc5?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" }} />
         <Card.Content>
-          <Title>{data.plantName}</Title>
+          {
+            !fontKalam ? <Text>Loading</Text> :
+            <Headline style={{fontFamily: 'Kalam_700Bold', marginTop: 10 }}>{data.plantName}</Headline>
+          }
         </Card.Content>
         <Card.Actions style={ styles.detailContainer }>
           <Tooltip isVisible={tempTip} content={<Text>Temperature</Text>} onClose={() => setTempTip(false)} placement="top" topAdjustment={-24} childContentSpacing={-8}>
             <Button labelStyle={{ fontSize: 20 }} onPress={() => setTempTip(true)} icon="thermometer">35 {indicator.humidity}</Button> 
           </Tooltip>
           <Tooltip isVisible={airTip} content={<Text>Air Humidity</Text>} onClose={() => setAirTip(false)} placement="top" topAdjustment={-24} childContentSpacing={-8}>
-            <Button labelStyle={{ fontSize: 20 }} onPress={() => setAirTip(true)} icon="water-percent">35 {indicator.moisture}</Button>
+            <Button labelStyle={{ fontSize: 20 }} onPress={() => setAirTip(true)} icon="water-percent">35 {indicator.humidity}</Button>
           </Tooltip>
           <Tooltip isVisible={groundTip} content={<Text>Ground Humidity</Text>} onClose={() => setGroundTip(false)} placement="top" topAdjustment={-24} childContentSpacing={-8}>
-            <Button labelStyle={{ fontSize: 20 }} onPress={() => setGroundTip(true)} icon="percent">35</Button>
+            <Button labelStyle={{ fontSize: 20 }} onPress={() => setGroundTip(true)} icon="percent">35 {indicator.moisture}</Button>
           </Tooltip>
         </Card.Actions>
         <Card.Content>
@@ -149,9 +155,6 @@ export default function FieldItem({ data }) {
           <Button icon="trash-can" onPress={() => setVisible(true)}>Delete</Button>
         </Card.Actions>
       </Card>
-      <Tooltip popover={<Text>Info here</Text>}>
-        <Text>Press me</Text>
-      </Tooltip>
     </View>
   )
 }
@@ -161,8 +164,13 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffe8d6",
     marginBottom: 20,
     maxWidth: "95%",
-    marginHorizontal: 20,
-    elevation: 4
+    marginHorizontal: 10,
+    elevation: 4,
+    borderRadius: 20
+  },
+  cardCover: {
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20
   },
   container: {
     backgroundColor: "#cb997e"
@@ -196,6 +204,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#cb997e"
   },
   detailContainer: {
-    justifyContent: 'space-evenly'
-  }
+    justifyContent: 'space-evenly',
+    height: 25
+  },
 })
