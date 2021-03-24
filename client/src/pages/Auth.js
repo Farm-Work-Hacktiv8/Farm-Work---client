@@ -29,7 +29,7 @@ export default function Auth(props) {
       checkAuth()
     }
   }, [access_token])
-  console.log(error, "<<<< eror di auth");
+  console.log(errorData, "<<<< eror di auth");
   useEffect(() => {
     if (errorData) {
       setVisible(true)
@@ -45,6 +45,8 @@ export default function Auth(props) {
         setUsername(storeUsername)
         setPassword(storePassword)
         confirmLogin()
+      } else {
+        console.log('cancel login from secureStore')
       }
     } catch (err) {
       console.log(err)
@@ -95,7 +97,7 @@ export default function Auth(props) {
 
   function handleSnackbar() {
     dispatch(error(""))
-    setSnackbar(false)
+    setVisible(false)
   }
 
   return (
@@ -166,7 +168,7 @@ export default function Auth(props) {
         </Card>
       </ScrollView>
       <Snackbar visible={visible} onDismiss={handleSnackbar} style={styles.snackbar} duration={4000}>
-        {error}
+        { errorData }
       </Snackbar>
     </>
   )

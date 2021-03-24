@@ -3,6 +3,7 @@ import { View, StyleSheet } from 'react-native'
 import { Card, Button, Title, Portal, Dialog, Paragraph, Modal, Divider, Text, TextInput, List } from 'react-native-paper'
 import { useDispatch, useSelector } from 'react-redux'
 import { deletePlant, getHistory, editPlants } from '../store/action'
+import Tooltip from 'react-native-walkthrough-tooltip'
 
 
 export default function FieldItem({ data }) {
@@ -17,6 +18,9 @@ export default function FieldItem({ data }) {
     harvestTime: data.harvestTime,
     fieldsId: data.PlantFields.fieldId
   })
+  const [tempTip, setTempTip] = useState(false)
+  const [airTip, setAirTip] = useState(false)
+  const [groundTip, setGroundTip] = useState(false)
   const hideModal = () => { setModalVisible(false) }
   const hideEdit = () => { setEditModal(false) }
   const history = useSelector(state => state.history)
@@ -124,10 +128,18 @@ export default function FieldItem({ data }) {
         <Card.Content>
           <Title>{data.plantName}</Title>
         </Card.Content>
+        <Card.Actions style={ styles.detailContainer }>
+          <Tooltip isVisible={tempTip} content={<Text>Temperature</Text>} onClose={() => setTempTip(false)} placement="top" topAdjustment={-24} childContentSpacing={-8}>
+            <Button labelStyle={{ fontSize: 20 }} onPress={() => setTempTip(true)} icon="thermometer">35 {indicator.humidity}</Button> 
+          </Tooltip>
+          <Tooltip isVisible={airTip} content={<Text>Air Humidity</Text>} onClose={() => setAirTip(false)} placement="top" topAdjustment={-24} childContentSpacing={-8}>
+            <Button labelStyle={{ fontSize: 20 }} onPress={() => setAirTip(true)} icon="water-percent">35 {indicator.moisture}</Button>
+          </Tooltip>
+          <Tooltip isVisible={groundTip} content={<Text>Ground Humidity</Text>} onClose={() => setGroundTip(false)} placement="top" topAdjustment={-24} childContentSpacing={-8}>
+            <Button labelStyle={{ fontSize: 20 }} onPress={() => setGroundTip(true)} icon="percent">35</Button>
+          </Tooltip>
+        </Card.Actions>
         <Card.Content>
-          <Text>Temperature: {indicator.temperature}</Text>
-          <Text>Air Humidity: {indicator.humidity}</Text>
-          <Text>Ground Humidity: {indicator.moisture}</Text>
           <Text>Harvest days: {data.harvestTime} days</Text>
           <Text>Last watering: {indicator.pump}</Text>
         </Card.Content>
@@ -137,6 +149,9 @@ export default function FieldItem({ data }) {
           <Button icon="trash-can" onPress={() => setVisible(true)}>Delete</Button>
         </Card.Actions>
       </Card>
+      <Tooltip popover={<Text>Info here</Text>}>
+        <Text>Press me</Text>
+      </Tooltip>
     </View>
   )
 }
@@ -180,4 +195,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     backgroundColor: "#cb997e"
   },
+  detailContainer: {
+    justifyContent: 'space-evenly'
+  }
 })
