@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import SwitchSelector from 'react-native-switch-selector'
 import { View, ScrollView, StyleSheet, Image } from 'react-native'
 import { Card, TextInput, Button, Snackbar } from 'react-native-paper'
-import { register, login } from '../store/action'
+import { register, login, error } from '../store/action'
 import { useDispatch, useSelector } from 'react-redux'
 import * as SecureStore from 'expo-secure-store'
 
@@ -19,7 +19,7 @@ export default function Auth(props) {
   const access_token = useSelector(state => state.access_token)
   const dispatch = useDispatch()
   const [visible, setVisible] = useState(false)
-  const error = useSelector(state => state.error)
+  const errorData = useSelector(state => state.error)
 
 
   useEffect(() => {
@@ -31,10 +31,10 @@ export default function Auth(props) {
   }, [access_token])
   console.log(error, "<<<< eror di auth");
   useEffect(() => {
-    if (error) {
+    if (errorData) {
       setVisible(true)
     }
-  }, [error])
+  }, [errorData])
 
   async function checkAuth() {
     try {
@@ -80,7 +80,7 @@ export default function Auth(props) {
       console.log(err)
     }
     // if (username && password) {
-    dispatch(login({ username, password }), navigation)
+    dispatch(login({ username, password }))
     setFirstName("")
     setLastName("")
     setUsername("")
@@ -91,6 +91,11 @@ export default function Auth(props) {
 
   function changePage(value) {
     setStatus(value)
+  }
+
+  function handleSnackbar() {
+    dispatch(error(""))
+    setSnackbar(false)
   }
 
   return (
@@ -160,7 +165,7 @@ export default function Auth(props) {
           }
         </Card>
       </ScrollView>
-      <Snackbar visible={visible} onDismiss={() => { setVisible(false) }} style={styles.snackbar} duration={4000}>
+      <Snackbar visible={visible} onDismiss={handleSnackbar} style={styles.snackbar} duration={4000}>
         {error}
       </Snackbar>
     </>
