@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { View, StyleSheet, Text } from 'react-native'
 import { Card, Button, Title, Portal, Dialog, Paragraph, Modal, TextInput, Headline, Chip } from 'react-native-paper'
 import { deleteField, editField, getIndicator } from '../store/action'
+import {useFonts, Inter_900Black} from '@expo-google-fonts/inter'
+import {Kalam_300Light, Kalam_400Regular, Kalam_700Bold} from '@expo-google-fonts/kalam'
 
 export default function HomeItem({ navigation, data }) {
 
@@ -12,6 +14,8 @@ export default function HomeItem({ navigation, data }) {
   const [fieldArea, setFieldArea] = useState(data.fieldArea)
   const dispatch = useDispatch()
   const access_token = useSelector(state => state.access_token)
+  const [fontLoaded] = useFonts({ Inter_900Black })
+  const [fontKalam] = useFonts ({Kalam_700Bold})
 
   function handleDelete() {
     setVisible(false)
@@ -83,7 +87,10 @@ export default function HomeItem({ navigation, data }) {
           style={styles.cardCover}
         />
         <Card.Content>
-          <Headline style={styles.title}>{data.fieldName}</Headline>
+          {
+            !fontKalam ? <Text>Loading</Text> :
+            <Headline style={{fontFamily: 'Kalam_700Bold', marginTop: 10 }}>{data.fieldName}</Headline>
+          }
           <Chip mode="outlined" icon="barley">{data.fieldArea} hectare</Chip>
         </Card.Content>
         <Card.Actions>

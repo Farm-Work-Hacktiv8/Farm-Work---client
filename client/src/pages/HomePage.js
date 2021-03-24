@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
   buttonAdd: {
     width: "30%",
     marginVertical: 20,
-    marginHorizontal: 120,
+    marginHorizontal: 140,
     borderRadius: 10
   },
   modal: {
