@@ -138,13 +138,13 @@ export default function FieldItem({ data }) {
         </Card.Content>
         <Card.Actions style={styles.detailContainer}>
           <Tooltip isVisible={tempTip} content={<Text>Temperature</Text>} onClose={() => setTempTip(false)} placement="top" topAdjustment={-24} childContentSpacing={-8}>
-            <Button labelStyle={{ fontSize: 20 }} onPress={() => setTempTip(true)} icon="thermometer">35 {indicator.temperature}</Button>
+            <Button labelStyle={{ fontSize: 20 }} onPress={() => setTempTip(true)} icon="thermometer">{indicator.temperature} C</Button>
           </Tooltip>
           <Tooltip isVisible={airTip} content={<Text>Air Humidity</Text>} onClose={() => setAirTip(false)} placement="top" topAdjustment={-24} childContentSpacing={-8}>
-            <Button labelStyle={{ fontSize: 20 }} onPress={() => setAirTip(true)} icon="water-percent">35 {indicator.humidity}</Button>
+            <Button labelStyle={{ fontSize: 20 }} onPress={() => setAirTip(true)} icon="water-percent">{indicator.humidity} %RH</Button>
           </Tooltip>
           <Tooltip isVisible={groundTip} content={<Text>Ground Humidity</Text>} onClose={() => setGroundTip(false)} placement="top" topAdjustment={-24} childContentSpacing={-8}>
-            <Button labelStyle={{ fontSize: 20 }} onPress={() => setGroundTip(true)} icon="percent">35 {indicator.moisture}</Button>
+            <Button labelStyle={{ fontSize: 20 }} onPress={() => setGroundTip(true)} icon="percent">{indicator.moisture} RH</Button>
           </Tooltip>
         </Card.Actions>
         <Card.Content style={styles.contentContainer}>

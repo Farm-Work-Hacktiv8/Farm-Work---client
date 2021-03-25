@@ -4,7 +4,8 @@ import { useDispatch, useSelector } from "react-redux"
 import { ScrollView } from 'react-native-gesture-handler'
 import { Button, Title, Modal, Portal, TextInput, ActivityIndicator, Colors, Snackbar, Appbar } from 'react-native-paper'
 import FieldItem from '../components/FieldItem'
-import { getPlants, addPlants, error } from "../store/action"
+import { getPlants, addPlants, error, setAccess_token } from "../store/action"
+import * as SecureStore from 'expo-secure-store'
 
 export default function DetailFieldPage({ route, navigation }) {
   const dispatch = useDispatch()
